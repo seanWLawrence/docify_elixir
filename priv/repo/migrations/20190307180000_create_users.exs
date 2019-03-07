@@ -3,10 +3,12 @@ defmodule Docify.Repo.Migrations.CreateUsers do
 
   def change do
     create table(:users) do
-      add :email, :string
+      add :name, :string
+      add :username, :string
 
       timestamps()
     end
 
+    create unique_index(:users, [:username])
   end
 end

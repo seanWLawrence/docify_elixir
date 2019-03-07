@@ -3,7 +3,7 @@ defmodule Docify.Repo.Migrations.CreateDocuments do
 
   def change do
     create table(:documents) do
-      add :context, :text
+      add :content, :json
 
       timestamps()
     end

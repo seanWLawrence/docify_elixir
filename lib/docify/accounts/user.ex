@@ -1,11 +1,12 @@
 defmodule Docify.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
-
+  alias Docify.Accounts.Credential
 
   schema "users" do
-    field :email, :string
-    has_many :documents
+    field :name, :string
+    field :username, :string
+    has_one :credential, Credential
 
     timestamps()
   end
@@ -13,8 +14,8 @@ defmodule Docify.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email])
-    |> validate_required([:email])
-    |> unique_constraint(:email)
+    |> cast(attrs, [:name, :username])
+    |> validate_required([:name, :username])
+    |> unique_constraint(:username)
   end
 end
