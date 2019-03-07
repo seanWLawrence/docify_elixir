@@ -20,6 +20,17 @@ defmodule DocifyElixirWeb.Router do
     get "/about", PageController, :about
   end
 
+  scope "/api" do
+    pipe_through :api
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: DocifyElixirWeb.Schema
+
+    forward "/", Absinthe.Plug,
+      schema: DocifyElixirWeb.Schema
+
+  end
+
   scope "/documents", DocifyElixirWeb do
     pipe_through :browser
 

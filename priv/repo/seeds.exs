@@ -9,3 +9,10 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+alias DocifyElixir.Accounts.User
+alias DocifyElixir.Repo
+
+%User{email: "test@test.com"} |> Repo.insert!
+
+%User{email: "hello@world.com"} |> Repo.insert!
