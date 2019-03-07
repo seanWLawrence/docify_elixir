@@ -1,0 +1,25 @@
+// @import '../../../scss/index.scss';
+
+// .Container {
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
+//   & + & {
+//     margin-top: 0;
+//   }
+// }
+
+// .Content {
+//   font-size: $font-size-body;
+//   color: $color-body;
+
+//   &:focus {
+//     outline: none;
+//   }
+// }
+
+// .Content--Checked {
+//   @extend .Content;
+
+//   text-decoration: line-through;
+// }
