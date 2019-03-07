@@ -5,6 +5,7 @@ defmodule Docify.Accounts.User do
 
   schema "users" do
     field :email, :string
+    has_many :documents
 
     timestamps()
   end
@@ -14,5 +15,6 @@ defmodule Docify.Accounts.User do
     user
     |> cast(attrs, [:email])
     |> validate_required([:email])
+    |> unique_constraint(:email)
   end
 end
