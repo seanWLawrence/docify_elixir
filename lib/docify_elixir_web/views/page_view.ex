@@ -1,3 +1,3 @@
-defmodule DocifyElixirWeb.PageView do
-  use DocifyElixirWeb, :view
+defmodule DocifyWeb.PageView do
+  use DocifyWeb, :view
 end

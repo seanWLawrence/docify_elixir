@@ -7,15 +7,15 @@
 # General application configuration
 use Mix.Config
 
-config :docify_elixir,
-  ecto_repos: [DocifyElixir.Repo]
+config :docify,
+  ecto_repos: [Docify.Repo]
 
 # Configures the endpoint
-config :docify_elixir, DocifyElixirWeb.Endpoint,
+config :docify, DocifyWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "qGtHrfWUP77B1rOTwWBAzlmvdBDR0KALyYuaUEBaSTpiUsmrW3ofjGv7K3ARxGxM",
-  render_errors: [view: DocifyElixirWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: DocifyElixir.PubSub, adapter: Phoenix.PubSub.PG2]
+  render_errors: [view: DocifyWeb.ErrorView, accepts: ~w(html json)],
+  pubsub: [name: Docify.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,

@@ -1,8 +1,8 @@
-defmodule DocifyElixirWeb.Schema do
+defmodule DocifyWeb.Schema do
   use Absinthe.Schema
-  import_types DocifyElixirWeb.Schema.AccountTypes
+  import_types DocifyWeb.Schema.AccountTypes
 
-  alias DocifyElixirWeb.Resolvers
+  alias DocifyWeb.Resolvers
 
   query do
     field :user, :user do

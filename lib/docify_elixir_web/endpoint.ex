@@ -1,7 +1,7 @@
-defmodule DocifyElixirWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :docify_elixir
+defmodule DocifyWeb.Endpoint do
+  use Phoenix.Endpoint, otp_app: :docify
 
-  socket "/socket", DocifyElixirWeb.UserSocket,
+  socket "/socket", DocifyWeb.UserSocket,
     websocket: true,
     longpoll: false
 
@@ -11,7 +11,7 @@ defmodule DocifyElixirWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: :docify_elixir,
+    from: :docify,
     gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt)
 
@@ -39,8 +39,8 @@ defmodule DocifyElixirWeb.Endpoint do
   # Set :encryption_salt if you would also like to encrypt it.
   plug Plug.Session,
     store: :cookie,
-    key: "_docify_elixir_key",
+    key: "_docify_key",
     signing_salt: "ekZk+vMp"
 
-  plug DocifyElixirWeb.Router
+  plug DocifyWeb.Router
 end

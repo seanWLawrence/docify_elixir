@@ -1,3 +1,3 @@
-defmodule DocifyElixirWeb.PageViewTest do
-  use DocifyElixirWeb.ConnCase, async: true
+defmodule DocifyWeb.PageViewTest do
+  use DocifyWeb.ConnCase, async: true
 end

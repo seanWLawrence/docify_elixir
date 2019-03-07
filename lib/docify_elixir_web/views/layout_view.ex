@@ -1,3 +1,3 @@
-defmodule DocifyElixirWeb.LayoutView do
-  use DocifyElixirWeb, :view
+defmodule DocifyWeb.LayoutView do
+  use DocifyWeb, :view
 end

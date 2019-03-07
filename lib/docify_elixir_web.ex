@@ -1,12 +1,12 @@
-defmodule DocifyElixirWeb do
+defmodule DocifyWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, views, channels and so on.
 
   This can be used in your application as:
 
-      use DocifyElixirWeb, :controller
-      use DocifyElixirWeb, :view
+      use DocifyWeb, :controller
+      use DocifyWeb, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -19,19 +19,19 @@ defmodule DocifyElixirWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: DocifyElixirWeb
+      use Phoenix.Controller, namespace: DocifyWeb
 
       import Plug.Conn
-      import DocifyElixirWeb.Gettext
-      alias DocifyElixirWeb.Router.Helpers, as: Routes
+      import DocifyWeb.Gettext
+      alias DocifyWeb.Router.Helpers, as: Routes
     end
   end
 
   def view do
     quote do
       use Phoenix.View,
-        root: "lib/docify_elixir_web/templates",
-        namespace: DocifyElixirWeb
+        root: "lib/docify_web/templates",
+        namespace: DocifyWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
@@ -39,9 +39,9 @@ defmodule DocifyElixirWeb do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import DocifyElixirWeb.ErrorHelpers
-      import DocifyElixirWeb.Gettext
-      alias DocifyElixirWeb.Router.Helpers, as: Routes
+      import DocifyWeb.ErrorHelpers
+      import DocifyWeb.Gettext
+      alias DocifyWeb.Router.Helpers, as: Routes
     end
   end
 
@@ -56,7 +56,7 @@ defmodule DocifyElixirWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import DocifyElixirWeb.Gettext
+      import DocifyWeb.Gettext
     end
   end
 

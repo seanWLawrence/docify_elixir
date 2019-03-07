@@ -1,3 +1,3 @@
-defmodule DocifyElixirWeb.LayoutViewTest do
-  use DocifyElixirWeb.ConnCase, async: true
+defmodule DocifyWeb.LayoutViewTest do
+  use DocifyWeb.ConnCase, async: true
 end

@@ -1,5 +1,5 @@
-defmodule DocifyElixirWeb.ErrorView do
-  use DocifyElixirWeb, :view
+defmodule DocifyWeb.ErrorView do
+  use DocifyWeb, :view
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.

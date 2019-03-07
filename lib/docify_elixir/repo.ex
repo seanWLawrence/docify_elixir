@@ -1,5 +1,5 @@
-defmodule DocifyElixir.Repo do
+defmodule Docify.Repo do
   use Ecto.Repo,
-    otp_app: :docify_elixir,
+    otp_app: :docify,
     adapter: Ecto.Adapters.Postgres
 end

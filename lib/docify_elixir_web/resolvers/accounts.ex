@@ -1,5 +1,5 @@
-defmodule DocifyElixirWeb.Resolvers.Accounts do
-  alias DocifyElixir.Accounts
+defmodule DocifyWeb.Resolvers.Accounts do
+  alias Docify.Accounts
 
   def user(_parent, %{id: id}, _resolution) do
     IO.inspect("Hello")

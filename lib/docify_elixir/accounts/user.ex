@@ -1,4 +1,4 @@
-defmodule DocifyElixir.Accounts.User do
+defmodule Docify.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 

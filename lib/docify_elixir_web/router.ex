@@ -1,5 +1,5 @@
-defmodule DocifyElixirWeb.Router do
-  use DocifyElixirWeb, :router
+defmodule DocifyWeb.Router do
+  use DocifyWeb, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -13,7 +13,7 @@ defmodule DocifyElixirWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", DocifyElixirWeb do
+  scope "/", DocifyWeb do
     pipe_through :browser
 
     get "/", PageController, :index
@@ -24,14 +24,14 @@ defmodule DocifyElixirWeb.Router do
     pipe_through :api
 
     forward "/graphiql", Absinthe.Plug.GraphiQL,
-      schema: DocifyElixirWeb.Schema
+      schema: DocifyWeb.Schema
 
     forward "/", Absinthe.Plug,
-      schema: DocifyElixirWeb.Schema
+      schema: DocifyWeb.Schema
 
   end
 
-  scope "/documents", DocifyElixirWeb do
+  scope "/documents", DocifyWeb do
     pipe_through :browser
 
     get "/", PageController, :documents
@@ -40,7 +40,7 @@ defmodule DocifyElixirWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", DocifyElixirWeb do
+  # scope "/api", DocifyWeb do
   #   pipe_through :api
   # end
 end

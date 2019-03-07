@@ -1,6 +1,6 @@
-defmodule DocifyElixir do
+defmodule Docify do
   @moduledoc """
-  DocifyElixir keeps the contexts that define your domain
+  Docify keeps the contexts that define your domain
   and business logic.
 
   Contexts are also responsible for managing your data, regardless

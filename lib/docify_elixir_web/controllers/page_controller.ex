@@ -1,5 +1,5 @@
-defmodule DocifyElixirWeb.PageController do
-  use DocifyElixirWeb, :controller
+defmodule DocifyWeb.PageController do
+  use DocifyWeb, :controller
 
   def index(conn, _params) do
     render(conn, "index.html")

@@ -1,4 +1,4 @@
-defmodule DocifyElixir.Repo.Migrations.CreateDocuments do
+defmodule Docify.Repo.Migrations.CreateDocuments do
   use Ecto.Migration
 
   def change do

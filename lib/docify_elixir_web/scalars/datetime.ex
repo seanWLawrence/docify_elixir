@@ -1,4 +1,4 @@
-defmodule DocifyElixirWeb.Scalars.DateTime do
+defmodule DocifyWeb.Scalars.DateTime do
   use Absinthe.Schema.Notation
 
   scalar :datetime, name: "DateTime" do

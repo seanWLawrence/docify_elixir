@@ -1,4 +1,4 @@
-defmodule DocifyElixir.User.Documents do
+defmodule Docify.User.Documents do
   use Ecto.Schema
   import Ecto.Changeset
 

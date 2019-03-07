@@ -1,12 +1,12 @@
-defmodule DocifyElixir.User do
+defmodule Docify.User do
   @moduledoc """
   The User context.
   """
 
   import Ecto.Query, warn: false
-  alias DocifyElixir.Repo
+  alias Docify.Repo
 
-  alias DocifyElixir.User.Documents
+  alias Docify.User.Documents
 
   @doc """
   Returns the list of documents.
