@@ -8,7 +8,6 @@ defmodule Docify.Accounts do
 
   alias Docify.Accounts.{User, Credential}
 
-  # TODO add Guardion to manage password
   def authenticate_by_email_password(email, _password) do
     query =
       from u in User,
@@ -20,7 +19,6 @@ defmodule Docify.Accounts do
       nil -> {:error, :unauthorized}
     end
   end
-
   @doc """
   Returns the list of users.
 

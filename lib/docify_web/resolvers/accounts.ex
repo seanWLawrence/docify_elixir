@@ -2,11 +2,11 @@ defmodule DocifyWeb.Resolvers.Accounts do
   alias Docify.Accounts
   alias Docify.Content
 
-  def user(_parent, %{id: id}, _resolution) do
-    case Accounts.get_user!(id) do
+  def viewer(_parent, %{context: %{current_user: current_user}}, _resolution) do
+    case current_user do
       nil ->
-        {:error, "User ID #{id} not found"}
-      user ->
+        {:error, "User not authenticated"}
+      user -> 
         {:ok, user}
     end
   end

@@ -21,8 +21,10 @@ defmodule DocifyWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
+  pipeline :graphql do
+    plug :fetch_session
+
+    plug DocifyWeb.Context
   end
 
   scope "/", DocifyWeb do
@@ -30,13 +32,38 @@ defmodule DocifyWeb.Router do
 
     get "/", PageController, :index
     get "/about", PageController, :about
-    resources "/users", UserController
-    resources "/sessions", SessionController, only: [:new, :create, :delete],
-      singleton: true
+    get "/signup", UserController, :new
+    post "/signup", UserController, :create
   end
 
+  scope "/account", DocifyWeb do
+    pipe_through [:browser, :authenticate_user]
+
+    get "/account", UserController, :show
+    get "/account/edit", UserController, :edit
+    put "/account/edit", UserController, :update
+    delete "/account/edit", UserController, :delete
+  end
+
+  scope "/login", DocifyWeb do 
+    pipe_through :browser
+
+    get "/", SessionController, :request_login
+    get "/:provider/callback", SessionController, :handle_request
+    post "/:provider/callback", SessionController, :handle_request
+  end
+
+  scope "/logout", DocifyWeb do
+    pipe_through [:browser, :authenticate_user]
+    
+    get "/", SessionController, :logout
+  end
+
+  @doc """
+  Passes routes to GraphQL API
+  """
   scope "/api" do
-    pipe_through [:api, :authenticate_user]
+    pipe_through [:graphql, :authenticate_user]
 
     forward "/graphiql", Absinthe.Plug.GraphiQL,
       schema: DocifyWeb.Schema
@@ -46,16 +73,14 @@ defmodule DocifyWeb.Router do
 
   end
 
+  @doc """
+  Passes routes to React application
+  """
   scope "/documents", DocifyWeb do
-    pipe_through :browser
+    pipe_through [:browser, :authenticate_user]
 
     get "/", PageController, :documents
     get "/demo", PageController, :documents
     get "/edit/:id", PageController, :documents
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", DocifyWeb do
-  #   pipe_through :api
-  # end
 end

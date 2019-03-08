@@ -1,4 +1,3 @@
-defmodule HelloWeb.SessionView do
-  def render do
-  end
+defmodule DocifyWeb.SessionView do
+  use DocifyWeb, :view
 end

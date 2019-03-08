@@ -6,6 +6,7 @@ defmodule Docify.Accounts.Credential do
 
   schema "credentials" do
     field :email, :string
+    field :password_hash, :string
     belongs_to :user, User
 
     timestamps()
@@ -14,8 +15,8 @@ defmodule Docify.Accounts.Credential do
   @doc false
   def changeset(credential, attrs) do
     credential
-    |> cast(attrs, [:email])
-    |> validate_required([:email])
+    |> cast(attrs, [:email, :password_hash])
+    |> validate_required([:email, :password_hash])
     |> unique_constraint(:email)
   end
 end

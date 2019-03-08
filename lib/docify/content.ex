@@ -19,6 +19,7 @@ defmodule Docify.Content do
 
   """
   def list_documents do
+    # IO.inspect(user)
     Document
     |> Repo.all()
     |> Repo.preload(author: [user: :credential])

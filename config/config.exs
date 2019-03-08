@@ -28,3 +28,28 @@ config :phoenix, :json_library, Jason
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
+
+# Ueberauth Config for oauth
+config :ueberauth, Ueberauth,
+  base_path: "/login",
+  providers: [
+    google: { Ueberauth.Strategy.Google, [] },
+    identity: { Ueberauth.Strategy.Identity, [
+        callback_methods: ["POST"],
+        uid_field: :username,
+      ] },
+  ]
+# Ueberauth Strategy Config for Google oauth
+config :ueberauth, Ueberauth.Strategy.Google.OAuth,
+  client_id: System.get_env("GOOGLE_CLIENT_ID"),
+  client_secret: System.get_env("GOOGLE_CLIENT_SECRET"),
+  redirect_uri: System.get_env("GOOGLE_REDIRECT_URI")
+
+# Guardian configuration
+config :docify, Docify.Guardian,
+  verify_module: Guardian.Token.Jwt.Verify, 
+  issuer: "Docify",
+  ttl: { 30, :days },
+  allowed_drift: 2000,
+  verify_issuer: true,
+  secret_key: System.get_env("GUARDIAN_SECRET")
