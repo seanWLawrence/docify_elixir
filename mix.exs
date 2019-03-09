@@ -49,8 +49,8 @@ defmodule Docify.MixProject do
       {:ueberauth, "~> 0.5"},
       {:ueberauth_identity, "~> 0.2"},
       {:ueberauth_google, "~> 0.8"},
-      {:comeonin, "~> 5.1.1"},
       {:guardian, "~> 1.0"},
+      {:argon2_elixir, "~> 2.0"}
     ]
   end
 

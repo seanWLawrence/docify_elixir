@@ -67,8 +67,12 @@ defmodule Docify.Accounts do
 
   """
   def create_user(attrs \\ %{}) do
+    password_hash = Argon2.add_hash(attrs.credential.password)
+    credential = Map.merge(attrs.credential, password_hash)
+    user_attrs = %{credential: credential}
+
     %User{}
-    |> User.changeset(attrs)
+    |> User.changeset(user_attrs)
     |> Ecto.Changeset.cast_assoc(:credential, with: &Credential.changeset/2)
     |> Repo.insert()
   end

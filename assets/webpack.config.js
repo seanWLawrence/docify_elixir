@@ -41,8 +41,9 @@ module.exports = (env, options) => ({
         },
       },
       {
-        test: /\.module\.scss$/,
+        test: /\.scss$/,
         use: [
+          MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
@@ -54,19 +55,10 @@ module.exports = (env, options) => ({
           'sass-loader',
         ],
       },
-      {
-        test: /\.[^module].scss$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'postcss-loader',
-          'sass-loader',
-        ],
-      },
     ],
   },
   plugins: [
-    new MiniCssExtractPlugin({ filename: './scss/index.module.scss' }),
-    new CopyWebpackPlugin([{ from: 'static/', to: '../' }]),
+    new MiniCssExtractPlugin({ filename: './scss/index.scss' }),
+    new CopyWebpackPlugin([{ from: './static/', to: '../' }]),
   ],
 });
