@@ -8,25 +8,6 @@ defmodule Docify.Accounts do
 
   alias Docify.Accounts.{User, Credential}
 
-  def authenticate_by_email_password(email, password) do
-    query =
-      from u in User,
-        inner_join: c in assoc(u, :credential),
-        where: c.email == ^email,
-        preload: [:credential]
-
-    user = Repo.one(query)
-
-    if user != nil do
-      %{credential: %{ password_hash: password_hash }} = user
-
-      password_is_valid = Argon2.verify_pass(password, password_hash)
-
-      if password_is_valid do {:ok, user} else {:error, :unauthorized} end
-    else
-      {:error, :unauthorized}
-    end
-  end
   @doc """
   Returns the list of users.
 
@@ -75,12 +56,8 @@ defmodule Docify.Accounts do
 
   """
   def create_user(attrs \\ %{}) do
-    password_hash = Argon2.add_hash(attrs.credential.password)
-    credential = Map.merge(attrs.credential, password_hash)
-    user_attrs = %{credential: credential}
-
     %User{}
-    |> User.changeset(user_attrs)
+    |> User.changeset(attrs)
     |> Ecto.Changeset.cast_assoc(:credential, with: &Credential.changeset/2)
     |> Repo.insert()
   end

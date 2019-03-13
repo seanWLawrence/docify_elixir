@@ -24,6 +24,7 @@ defmodule DocifyWeb do
       import Plug.Conn
       import DocifyWeb.Gettext
       alias DocifyWeb.Router.Helpers, as: Routes
+      alias Docify.AuthToken
     end
   end
 

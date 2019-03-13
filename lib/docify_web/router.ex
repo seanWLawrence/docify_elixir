@@ -1,17 +1,8 @@
 defmodule DocifyWeb.Router do
   use DocifyWeb, :router
 
-
-  defp authenticate_user(conn, _) do
-    case get_session(conn, :user_id) do
-      nil ->
-        conn
-        |> Phoenix.Controller.put_flash(:error, "Login required")
-        |> Phoenix.Controller.redirect(to: "/")
-        |> halt()
-      user_id ->
-        assign(conn, :current_user, Docify.Accounts.get_user!(user_id))
-    end
+  pipeline :auth do
+    plug Docify.Auth.AuthAccessPipeline
   end
 
   pipeline :browser do
@@ -38,7 +29,7 @@ defmodule DocifyWeb.Router do
   end
 
   scope "/account", DocifyWeb do
-    pipe_through [:browser, :authenticate_user]
+    pipe_through [:browser, :auth]
 
     get "/account", UserController, :show
     get "/account/edit", UserController, :edit
@@ -50,12 +41,12 @@ defmodule DocifyWeb.Router do
     pipe_through :browser
 
     get "/", SessionController, :request_login
-    get "/:provider/callback", SessionController, :handle_request
-    post "/:provider/callback", SessionController, :handle_request
+    get "/:provider/callback", SessionController, :handle_login_request
+    post "/:provider/callback", SessionController, :handle_login_request
   end
 
   scope "/logout", DocifyWeb do
-    pipe_through [:browser, :authenticate_user]
+    pipe_through [:browser, :auth]
     
     get "/", SessionController, :logout
   end
@@ -64,7 +55,7 @@ defmodule DocifyWeb.Router do
   Passes routes to GraphQL API
   """
   scope "/api" do
-    pipe_through [:graphql, :authenticate_user]
+    pipe_through [:graphql, :auth]
 
     forward "/graphiql", Absinthe.Plug.GraphiQL,
       schema: DocifyWeb.Schema
@@ -78,7 +69,7 @@ defmodule DocifyWeb.Router do
   Passes routes to React application
   """
   scope "/documents", DocifyWeb do
-    pipe_through [:browser, :authenticate_user]
+    pipe_through [:browser, :auth]
 
     get "/", PageController, :documents
     get "/demo", PageController, :documents

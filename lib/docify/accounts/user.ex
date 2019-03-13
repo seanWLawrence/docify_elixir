@@ -19,4 +19,19 @@ defmodule Docify.Accounts.User do
     |> validate_required([:credential])
     |> unique_constraint(:username)
   end
+
+  defp put_password_hash(
+    %Ecto.Changeset{
+      valid?: true, 
+      changes: %{
+        credential: %{
+          password: password
+        }
+      }
+    } = changeset
+  ) do
+    change(changeset, password: Argon2.add_hash(password))
+  end
+
+  defp put_password_hash(changeset), do: changeset
 end

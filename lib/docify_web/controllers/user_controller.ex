@@ -1,8 +1,10 @@
 defmodule DocifyWeb.UserController do
   use DocifyWeb, :controller
-
+  import Docify.Auth, only: [load_current_user: 2]
   alias Docify.Accounts
   alias Docify.Accounts.User
+
+  plug(:load_current_user when action in [:show, :edit, :update, :delete])
 
   def new(conn, _params) do
     changeset = Accounts.change_user(%User{})
@@ -13,6 +15,7 @@ defmodule DocifyWeb.UserController do
     case Accounts.create_user(user_params) do
       {:ok, user} ->
         conn
+        |> Docify.Auth.login(user)
         |> put_flash(:info, "User created successfully.")
         |> redirect(to: "/")
 

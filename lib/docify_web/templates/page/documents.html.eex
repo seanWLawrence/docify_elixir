@@ -1,3 +1,4 @@
 <main id="root"></main>
+<p>Hey, <%= @current_user.name || "You" %></p>
 
-  <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+  <%# <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js")"></script> %>

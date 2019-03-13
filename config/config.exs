@@ -25,11 +25,16 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-# Import environment specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
-import_config "#{Mix.env()}.exs"
+# Guardian authentication
+config :docify, Docify.Auth.Guardian,
+  issuer: "docify",
+  secret_key: "HNinpKh9Ne3tr8BpjCpAEh0xzCqTIG3PWsfkR2AtzvUaRIpbs6oIQ9RcmjmGPekJ"
 
-# Ueberauth Config for oauth
+config :docify, Docify.Auth.AuthAccessPipeline,
+  module: Docify.Auth.Guardian,
+  error_handler: Docify.Auth.AuthErrorHandler
+
+# Ueberauth authentication validation
 config :ueberauth, Ueberauth,
   base_path: "/login",
   providers: [
@@ -39,11 +44,9 @@ config :ueberauth, Ueberauth,
       ] },
   ]
 
-# Guardian configuration
-config :docify, Docify.Guardian,
-  verify_module: Guardian.Token.Jwt.Verify, 
-  issuer: "Docify",
-  ttl: { 30, :days },
-  allowed_drift: 2000,
-  verify_issuer: true,
-  secret_key: System.get_env("GUARDIAN_SECRET")
+# Import environment specific config. This must remain at the bottom
+# of this file so it overrides the configuration defined above.
+import_config "#{Mix.env()}.exs"
+
+
+
