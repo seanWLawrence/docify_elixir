@@ -20,7 +20,7 @@ defmodule Docify.MixProject do
   def application do
     [
       mod: {Docify.Application, []},
-      extra_applications: [:logger, :runtime_tools, :ueberauth_identity, :ueberauth_google],
+      extra_applications: [:logger, :runtime_tools, :ueberauth_identity],
     ]
   end
 
@@ -48,7 +48,6 @@ defmodule Docify.MixProject do
       {:poison, "~> 3.1"},
       {:ueberauth, "~> 0.5"},
       {:ueberauth_identity, "~> 0.2"},
-      {:ueberauth_google, "~> 0.8"},
       {:guardian, "~> 1.0"},
       {:argon2_elixir, "~> 2.0"}
     ]

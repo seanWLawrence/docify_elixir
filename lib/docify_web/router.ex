@@ -1,6 +1,7 @@
 defmodule DocifyWeb.Router do
   use DocifyWeb, :router
 
+
   defp authenticate_user(conn, _) do
     case get_session(conn, :user_id) do
       nil ->

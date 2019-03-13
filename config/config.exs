@@ -33,17 +33,11 @@ import_config "#{Mix.env()}.exs"
 config :ueberauth, Ueberauth,
   base_path: "/login",
   providers: [
-    google: { Ueberauth.Strategy.Google, [] },
     identity: { Ueberauth.Strategy.Identity, [
         callback_methods: ["POST"],
         uid_field: :username,
       ] },
   ]
-# Ueberauth Strategy Config for Google oauth
-config :ueberauth, Ueberauth.Strategy.Google.OAuth,
-  client_id: System.get_env("GOOGLE_CLIENT_ID"),
-  client_secret: System.get_env("GOOGLE_CLIENT_SECRET"),
-  redirect_uri: System.get_env("GOOGLE_REDIRECT_URI")
 
 # Guardian configuration
 config :docify, Docify.Guardian,

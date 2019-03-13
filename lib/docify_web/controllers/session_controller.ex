@@ -1,11 +1,10 @@
 defmodule DocifyWeb.SessionController do
   use DocifyWeb, :controller
   plug Ueberauth
-
-  alias Docify.Accounts
   alias DocifyWeb.Router.Helpers
+  alias Docify.Accounts
 
-  def request_login(conn, params) do
+  def request_login(conn, _params) do
     callback_url = Helpers.session_path(conn, :handle_request, "identity")
 
     render(conn, "login.html", callback_url: callback_url)
@@ -18,7 +17,9 @@ defmodule DocifyWeb.SessionController do
   end
 
   def handle_request(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
-    case UserFromAuth.find_or_create(auth) do
+    %{extra: %{raw_info: %{"email" => email, "password" => password}}} = auth
+
+    case Accounts.authenticate_by_email_password(email, password) do
       {:ok, user} ->
         conn
         |> put_flash(:info, "Successfully authenticated.")

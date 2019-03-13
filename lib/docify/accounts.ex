@@ -8,15 +8,23 @@ defmodule Docify.Accounts do
 
   alias Docify.Accounts.{User, Credential}
 
-  def authenticate_by_email_password(email, _password) do
+  def authenticate_by_email_password(email, password) do
     query =
       from u in User,
         inner_join: c in assoc(u, :credential),
-        where: c.email == ^email
+        where: c.email == ^email,
+        preload: [:credential]
 
-    case Repo.one(query) do
-      %User{} = user -> {:ok, user}
-      nil -> {:error, :unauthorized}
+    user = Repo.one(query)
+
+    if user != nil do
+      %{credential: %{ password_hash: password_hash }} = user
+
+      password_is_valid = Argon2.verify_pass(password, password_hash)
+
+      if password_is_valid do {:ok, user} else {:error, :unauthorized} end
+    else
+      {:error, :unauthorized}
     end
   end
   @doc """
