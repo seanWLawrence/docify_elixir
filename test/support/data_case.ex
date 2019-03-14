@@ -1,4 +1,4 @@
-defmodule DocifyElixir.DataCase do
+defmodule Docify.DataCase do
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
@@ -16,20 +16,20 @@ defmodule DocifyElixir.DataCase do
 
   using do
     quote do
-      alias DocifyElixir.Repo
+      alias Docify.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import DocifyElixir.DataCase
+      import Docify.DataCase
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(DocifyElixir.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Docify.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(DocifyElixir.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Docify.Repo, {:shared, self()})
     end
 
     :ok

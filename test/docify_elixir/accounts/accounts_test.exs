@@ -1,10 +1,10 @@
-defmodule DocifyElixir.AccountsTest do
-  use DocifyElixir.DataCase
+defmodule Docify.AccountsTest do
+  use Docify.DataCase
 
-  alias DocifyElixir.Accounts
+  alias Docify.Accounts
 
   describe "users" do
-    alias DocifyElixir.Accounts.User
+    alias Docify.Accounts.User
 
     @valid_attrs %{email: "some email"}
     @update_attrs %{email: "some updated email"}

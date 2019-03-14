@@ -1,9 +1,9 @@
-defmodule DocifyElixir.MixProject do
+defmodule Docify.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :docify_elixir,
+      app: :docify,
       version: "0.1.0",
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -19,8 +19,8 @@ defmodule DocifyElixir.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {DocifyElixir.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      mod: {Docify.Application, []},
+      extra_applications: [:logger, :runtime_tools, :ueberauth_identity],
     ]
   end
 
@@ -45,7 +45,10 @@ defmodule DocifyElixir.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:absinthe, "~> 1.4.0"},
       {:absinthe_plug, "~> 1.4.0"},
-      {:poison, "~> 3.1"}
+      {:ueberauth, "~> 0.5"},
+      {:ueberauth_identity, "~> 0.2"},
+      {:guardian, "~> 1.0"},
+      {:argon2_elixir, "~> 2.0"}
     ]
   end
 

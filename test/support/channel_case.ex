@@ -1,4 +1,4 @@
-defmodule DocifyElixirWeb.ChannelCase do
+defmodule DocifyWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -21,15 +21,15 @@ defmodule DocifyElixirWeb.ChannelCase do
       use Phoenix.ChannelTest
 
       # The default endpoint for testing
-      @endpoint DocifyElixirWeb.Endpoint
+      @endpoint DocifyWeb.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(DocifyElixir.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Docify.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(DocifyElixir.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Docify.Repo, {:shared, self()})
     end
 
     :ok

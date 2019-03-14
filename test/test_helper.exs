@@ -1,2 +1,2 @@
 ExUnit.start()
-Ecto.Adapters.SQL.Sandbox.mode(DocifyElixir.Repo, :manual)
+Ecto.Adapters.SQL.Sandbox.mode(Docify.Repo, :manual)

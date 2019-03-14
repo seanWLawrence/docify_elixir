@@ -1,5 +1,5 @@
-defmodule DocifyElixirWeb.PageControllerTest do
-  use DocifyElixirWeb.ConnCase
+defmodule DocifyWeb.PageControllerTest do
+  use DocifyWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")
