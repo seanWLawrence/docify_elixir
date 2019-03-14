@@ -48,6 +48,7 @@ defmodule Docify.MixProject do
       {:ueberauth, "~> 0.5"},
       {:ueberauth_identity, "~> 0.2"},
       {:guardian, "~> 1.0"},
+      {:poison, "~> 3.1"},
       {:argon2_elixir, "~> 2.0"}
     ]
   end

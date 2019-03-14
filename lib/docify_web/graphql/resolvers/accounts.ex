@@ -2,13 +2,11 @@ defmodule DocifyWeb.Resolvers.Accounts do
   alias Docify.Accounts
   alias Docify.Content
 
-  def viewer(_parent, %{context: %{current_user: current_user}}, _resolution) do
-    case current_user do
-      nil ->
-        {:error, "User not authenticated"}
-      user -> 
-        {:ok, user}
-    end
+  def viewer(_parent, context, _resolution) do
+    IO.inspect "CONTEXT"
+    IO.inspect context
+    
+    {:ok, %{id: "HELLO"}}
   end
 
   def documents(_parent, %{user_id: user_id}, _resolution) do

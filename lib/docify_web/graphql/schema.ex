@@ -5,10 +5,13 @@ defmodule DocifyWeb.Schema do
   alias DocifyWeb.Resolvers
 
   query do
-    field :user, :user do
+    field :viewer, :user do
       arg :id, non_null(:id)
 
-      resolve &Resolvers.Accounts.user/3
+      resolve fn _, %{context: %{current_user: current_user}} ->
+        {:ok, current_user}
+    end
     end
   end
 end
+

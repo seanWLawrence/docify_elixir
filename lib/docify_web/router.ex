@@ -13,8 +13,12 @@ defmodule DocifyWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :graphql do
+  pipeline :session do
     plug :fetch_session
+  end
+
+  pipeline :graphql do
+    plug :accepts, ["json"]
 
     plug DocifyWeb.Context
   end
@@ -58,15 +62,14 @@ defmodule DocifyWeb.Router do
   @doc """
   Passes routes to GraphQL API
   """
-  scope "/api" do
-    pipe_through [:graphql, :auth]
+  scope "/" do
+    pipe_through [:session, :auth, :graphql]
 
     forward "/graphiql", Absinthe.Plug.GraphiQL,
       schema: DocifyWeb.Schema
 
-    forward "/", Absinthe.Plug,
+    forward "/graphql", Absinthe.Plug,
       schema: DocifyWeb.Schema
-
   end
 
   @doc """

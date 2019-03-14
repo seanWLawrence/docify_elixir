@@ -13,11 +13,8 @@
         <li><a class="logo" href="/" title="Home">Docify</a></li>
         <li><a href="/about" title="About">About</a></li>
         <li><a href="/documents" title="Documents">Documents</a></li>
-        <% if @current_user != nil do %>
-          <li><a href="/logout" title="Documents">Logout</a></li>
-        <% else %>
-          <li><a href="/login" title="Documents">Login</a></li>
-        <% end %>
+        <li><a href="/login" title="Documents">Login</a></li>
+        <li><a href="/logout" title="Documents">Logout</a></li>
       </nav>
     </header>
     <main role="main" class="container">
@@ -30,6 +27,7 @@
         <li><a href="/privacy-policy" title="Privacy policy">Privacy policy</a></li>
         <li><a href="/terms-and-conditions" title="Terms and conditions">Terms and conditions</a></li>
         <li><a href="/support" title="Support">Support</a></li>
+        <li><a href="/graphiql" title="GraphiQL">GraphiQL</a></li>
       </nav>
     </footer>
   </body>
