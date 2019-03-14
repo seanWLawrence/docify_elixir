@@ -24,6 +24,10 @@ defmodule DocifyWeb.Router do
 
     get "/", PageController, :index
     get "/about", PageController, :about
+    get "/privacy-policy", PageController, :privacy_policy
+    get "/terms-and-conditions", PageController, :terms_and_conditions
+    get "/support", PageController, :support
+    
     get "/signup", UserController, :new
     post "/signup", UserController, :create
   end

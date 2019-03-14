@@ -15,4 +15,16 @@ defmodule DocifyWeb.PageController do
   def documents(conn, _params) do
     render(conn, "documents.html")
   end
+
+  def support(conn, _params) do
+    render(conn, "support.html")
+  end
+
+  def privacy_policy(conn, _params) do
+    render(conn, "support.html")
+  end
+
+  def terms_and_conditions(conn, _params) do
+    render(conn, "support.html")
+  end
 end

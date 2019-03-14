@@ -43,8 +43,6 @@ defmodule Docify.Auth do
   def load_current_user(conn, _) do
     current_user = Guardian.Plug.current_resource(conn)
 
-    IO.inspect(conn.assigns)
-
     case current_user do
       nil -> conn
       _ -> 
