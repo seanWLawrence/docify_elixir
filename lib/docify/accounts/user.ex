@@ -1,37 +1,46 @@
 defmodule Docify.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Docify.Accounts.Credential
+  alias Docify.Content.Document
+  alias Docify.Password
 
   schema "users" do
     field :name, :string
     field :username, :string
-    has_one :credential, Credential
+    field :email, :string
+    field :password, :string, virtual: true
+    field :password_hash, :string
+    has_many :documents, Document
 
     timestamps()
   end
 
   @doc false
-  def changeset(user, attrs) do
+  def changeset(user, attrs \\ %{}) do
     user
-    |> cast(attrs, [:name, :username])
-    |> cast_assoc(:credential)
-    |> validate_required([:credential])
+    |> cast(attrs, [:name, :username, :email])
+    |> validate_required([:email, :password_hash])
+    |> validate_length(:username, min: 3)
     |> unique_constraint(:username)
+    |> unique_constraint(:email)
+    |> cast_assoc(:documents)
   end
 
-  defp put_password_hash(
-    %Ecto.Changeset{
-      valid?: true, 
-      changes: %{
-        credential: %{
-          password: password
-        }
-      }
-    } = changeset
-  ) do
-    change(changeset, password: Argon2.add_hash(password))
+  def changeset_with_password(user, attrs \\ %{}) do
+    user
+    |> cast(attrs, [:password])
+    |> validate_required(:password)
+    |> validate_length(:password, min: 6)
+    |> hash_password()
+    |> changeset(attrs)
   end
 
-  defp put_password_hash(changeset), do: changeset
+  defp hash_password(%Ecto.Changeset{changes: %{password: password}} = changeset) do
+    IO.inspect(password)
+
+    changeset
+    |> put_change(:password_hash, Password.hash(password))
+  end
+
+  defp hash_password(changeset), do: changeset
 end

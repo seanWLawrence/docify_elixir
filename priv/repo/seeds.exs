@@ -12,7 +12,8 @@
 
 alias Docify.Accounts.User
 alias Docify.Repo
+alias Docify.Password
 
-%User{email: "test@test.com"} |> Repo.insert!
+%User{email: "test@test.com", password_hash: Password.hash("test1234")} |> Repo.insert!()
 
-%User{email: "hello@world.com"} |> Repo.insert!
+%User{email: "hello@world.com", password_hash: Password.hash("helloworld")} |> Repo.insert!()

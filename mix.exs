@@ -20,7 +20,7 @@ defmodule Docify.MixProject do
   def application do
     [
       mod: {Docify.Application, []},
-      extra_applications: [:logger, :runtime_tools, :ueberauth_identity],
+      extra_applications: [:logger, :runtime_tools, :ueberauth_identity]
     ]
   end
 

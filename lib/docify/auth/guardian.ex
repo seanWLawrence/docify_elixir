@@ -11,6 +11,7 @@ defmodule Docify.Auth.Guardian do
 
   def resource_from_claims(%{"sub" => user_id}) do
     user = Accounts.get_user!(user_id)
+
     {:ok, user}
   end
 end

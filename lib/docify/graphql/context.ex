@@ -1,4 +1,4 @@
-defmodule DocifyWeb.Context do
+defmodule Docify.Context do
   alias Docify.Auth.Guardian
 
   def init(opts), do: opts

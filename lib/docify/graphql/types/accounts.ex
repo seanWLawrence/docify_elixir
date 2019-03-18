@@ -1,6 +1,6 @@
-defmodule DocifyWeb.Schema.AccountTypes do
+defmodule Docify.Types.Accounts do
   use Absinthe.Schema.Notation
-  import_types DocifyWeb.Scalars.DateTime
+  import_types Docify.Scalars.DateTime
 
   object :document do
     field :id, non_null(:id)

@@ -1,4 +1,4 @@
-defmodule DocifyWeb.Resolvers.Accounts do
+defmodule Docify.Resolvers.Accounts do
   alias Docify.Accounts
   alias Docify.Content
 

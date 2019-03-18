@@ -1,28 +1,30 @@
 defmodule Docify.Auth do
   @moduledoc false
-  
-  require Ecto.Query
-  import Ecto.Query, warn: false
+
+  import Ecto.Query
   import Plug.Conn
   alias Docify.Repo
   alias Docify.Auth.Guardian
-  alias Docify.Accounts.{User, Credential}
+  alias Docify.Password
+  alias Docify.Accounts.User
 
   def authenticate_by_email_password(email, password) do
     query =
       from u in User,
-        inner_join: c in assoc(u, :credential),
-        where: c.email == ^email,
-        preload: [:credential]
+        where: u.email == ^email
 
-    Repo.one(query)
-    |> check_password(password)
+    case Repo.one(query) do
+      nil ->
+        Password.stub_verify()
+
+      user ->
+        user
+        |> check_password(password)
+    end
   end
 
-  defp check_password(user, password) do 
-    %{credential: %{ password: password_hash }} = user
-    
-    case Argon2.verify_pass(password, password_hash) do
+  defp check_password(%{password_hash: password_hash} = user, password) do
+    case Password.verify_hash(password, password_hash) do
       true -> {:ok, user}
       false -> {:error, "Incorrect password"}
     end
@@ -44,11 +46,13 @@ defmodule Docify.Auth do
     current_user = Guardian.Plug.current_resource(conn)
 
     case current_user do
-      nil -> conn
-      _ -> 
+      nil ->
         conn
-          |> assign(:current_user, current_user)
-          |> put_user_token(current_user)
+
+      _ ->
+        conn
+        |> assign(:current_user, current_user)
+        |> put_user_token(current_user)
     end
   end
 
