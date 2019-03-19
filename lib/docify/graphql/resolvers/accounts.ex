@@ -1,20 +1,11 @@
 defmodule Docify.Resolvers.Accounts do
-  alias Docify.Accounts
-  alias Docify.Content
+  alias Docify.Repo
 
-  def viewer(_parent, context, _resolution) do
-    IO.inspect "CONTEXT"
-    IO.inspect context
-    
-    {:ok, %{id: "HELLO"}}
-  end
+  def get_viewer(_parent, %{context: %{current_user: current_user}}) do
+    current_user =
+      current_user
+      |> Repo.preload(:documents)
 
-  def documents(_parent, %{user_id: user_id}, _resolution) do
-    case Content.list_documents do
-      nil ->
-        {:error, "User ID #{user_id} not found"}
-      documents ->
-        {:ok, documents}
-    end
+    {:ok, current_user}
   end
 end

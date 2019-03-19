@@ -1,9 +1,12 @@
 defmodule DocifyWeb.SessionController do
   use DocifyWeb, :controller
   plug Ueberauth
+  import Docify.Auth, only: [load_current_user: 2]
+
+  plug :load_current_user
 
   def new(conn, _params) do
-    callback_url = Routes.session_path(conn, :new, "identity")
+    callback_url = Routes.session_path(conn, :create, "identity")
 
     render(conn, "login.html", callback_url: callback_url)
   end
@@ -18,7 +21,7 @@ defmodule DocifyWeb.SessionController do
         %{
           assigns: %{
             ueberauth_auth: %{
-              extra: %{raw_info: %{"email" => email, "password_hash" => password}}
+              extra: %{raw_info: %{"email" => email, "password" => password}}
             }
           }
         } = conn,
@@ -38,7 +41,7 @@ defmodule DocifyWeb.SessionController do
     end
   end
 
-  def logout(conn, _params) do
+  def delete(conn, _params) do
     conn
     |> Docify.Auth.logout()
     |> put_flash(:info, "You have been logged out!")

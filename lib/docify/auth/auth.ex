@@ -9,6 +9,8 @@ defmodule Docify.Auth do
   alias Docify.Accounts.User
 
   def authenticate_by_email_password(email, password) do
+    IO.inspect(email)
+
     query =
       from u in User,
         where: u.email == ^email
@@ -16,6 +18,7 @@ defmodule Docify.Auth do
     case Repo.one(query) do
       nil ->
         Password.stub_verify()
+        {:error, "Password or email do not match"}
 
       user ->
         user
