@@ -13,5 +13,11 @@ defmodule Docify.Schema do
     field :viewer, :user do
       resolve(&Resolvers.Accounts.get_viewer/2)
     end
+
+    @desc "Get a single document by its id"
+    field :document, :document do
+      arg(:id, non_null(:id))
+      resolve(&Resolvers.Content.get_document/2)
+    end
   end
 end

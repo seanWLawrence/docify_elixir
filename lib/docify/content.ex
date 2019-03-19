@@ -19,7 +19,6 @@ defmodule Docify.Content do
 
   """
   def list_documents do
-    # IO.inspect(user)
     Document
     |> Repo.all()
     |> Repo.preload(:user)
@@ -57,14 +56,14 @@ defmodule Docify.Content do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_document(%{id: user_id}, attrs \\ %{}) do
+  def create_document(%{user_id: user_id, content: content}) do
     %Document{}
-    |> Document.changeset(attrs)
+    |> Document.changeset(%{user_id: user_id, content: content})
     |> Ecto.Changeset.put_change(:user_id, user_id)
     |> Repo.insert()
   end
 
-  def ensure_user_exists(%{id: user_id}) do
+  def ensure_user_exists(%{user_id: user_id}) do
     user_id
     |> Ecto.Changeset.change()
     |> Ecto.Changeset.unique_constraint(:user_id)
