@@ -115,7 +115,7 @@ const DOCUMENT_QUERY = gql`
 `;
 
 const EDIT_DOCUMENT_MUTATION = gql`
-  mutation UpdateDocument($documentId: ID!, $content: SlateValue!) {
+  mutation UpdateDocument($documentId: ID!, $content: String!) {
     updateDocumentContent(documentId: $documentId, content: $content) {
       document {
         id

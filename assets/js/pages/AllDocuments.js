@@ -28,6 +28,8 @@ let AllDocuments = ({ data: { loading, error, viewer }, mutate }) => {
 
   let hasDocuments = documents.length > 0;
 
+  console.log(documents);
+
   return (
     <div className={styles.Container}>
       <CreateDocumentButton onClick={() => mutate(createDocument)} />

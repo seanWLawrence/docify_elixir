@@ -8,4 +8,8 @@ defmodule Docify.Types.Document do
     field :inserted_at, non_null(:datetime)
     field :updated_at, non_null(:datetime)
   end
+
+  object :document_mutation_payload do
+    field :document, non_null(:document)
+  end
 end

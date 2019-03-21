@@ -1,4 +1,4 @@
-defmodule Docify.Resolvers.Accounts do
+defmodule Docify.Resolvers.Accounts.GetViewer do
   alias Docify.Repo
 
   def get_viewer(_parent, %{context: %{current_user: current_user}}) do

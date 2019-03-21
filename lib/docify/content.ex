@@ -45,6 +45,26 @@ defmodule Docify.Content do
   end
 
   @doc """
+  Gets a single document.
+
+  Returns nil if document does not exist.
+
+  ## Examples
+
+      iex> get_document(123)
+      %Document{}
+
+      iex> get_document!(456)
+      {:error: reason}
+
+  """
+  def get_document(id) do
+    Document
+    |> Repo.get(id)
+    |> Repo.preload(:user)
+  end
+
+  @doc """
   Creates a document.
 
   ## Examples
