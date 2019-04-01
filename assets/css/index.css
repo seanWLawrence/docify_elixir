@@ -1,9 +1,0 @@
-nav {
-  display: flex;
-  justify-content: flex-end;
-  list-style-type: none;
-}
-
-li {
-  margin: 0.5em 1em;
-}

@@ -13,7 +13,8 @@ defmodule DocifyWeb.Endpoint do
     at: "/",
     from: :docify,
     gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only:
+      ~w(css js images favicon.ico robots.txt manifest.json index.html service-worker.js asset-manifest.json)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

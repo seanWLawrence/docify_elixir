@@ -31,6 +31,7 @@ defmodule DocifyWeb.Router do
     get "/privacy-policy", PageController, :privacy_policy
     get "/terms-and-conditions", PageController, :terms_and_conditions
     get "/support", PageController, :support
+    get "/demo", PageController, :documents
 
     get "/signup", UserController, :new
     post "/signup", UserController, :create
@@ -71,7 +72,6 @@ defmodule DocifyWeb.Router do
     pipe_through [:browser, :auth]
 
     get "/", PageController, :documents
-    get "/demo", PageController, :documents
     get "/edit/:id", PageController, :documents
   end
 end
