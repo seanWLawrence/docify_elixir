@@ -5,6 +5,7 @@
   "proxy": "http://localhost:4000",
   "dependencies": {
     "@babel/core": "7.2.2",
+    "@emotion/core": "^10.0.10",
     "@reach/router": "^1.2.1",
     "@svgr/webpack": "4.1.0",
     "@types/jest": "24.0.11",
@@ -93,7 +94,14 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "react-hot-loader": "^4.8.2"
+    "@types/is-hotkey": "^0.1.1",
+    "@types/lodash": "^4.14.123",
+    "@types/reach__router": "^1.2.3",
+    "@types/slate": "^0.44.2",
+    "@types/slate-html-serializer": "^0.6.3",
+    "@types/slate-react": "^0.21.2",
+    "react-hot-loader": "^4.8.2",
+    "tsconfig-paths-webpack-plugin": "^3.2.0"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -105,15 +113,15 @@
       "react-app-polyfill/jsdom"
     ],
     "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
-      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,ts,tsx}"
+      "<rootDir>/assets/js/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+      "<rootDir>/assets/js/src/**/?(*.)(spec|test).{js,jsx,ts,tsx}"
     ],
     "testEnvironment": "jsdom",
     "testURL": "http://localhost",
     "transform": {
       "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+      "^.+\\.css$": "<rootDir>/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/jest/fileTransform.js"
     },
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",

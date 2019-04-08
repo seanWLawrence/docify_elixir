@@ -21,12 +21,11 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 
 let Routes = lazy(() => import('./config/Routes'));
-// import Routes from './config/Routes';
 
 let root = document.getElementById('root');
 
 render(
-  <Suspense fallback={<Spinner isLoading />}>
+  <Suspense fallback={<Spinner />}>
     <ApolloProvider client={client}>
       <Routes />
     </ApolloProvider>

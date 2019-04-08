@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { ReactNode, FC } from 'react';
 import { hot } from 'react-hot-loader/root';
 
-interface Props {
-  children: React.ReactChild;
-}
-
-let App = ({ children }: Props) => {
-  return <>{children}</>;
+type Props = {
+  children: ReactNode;
 };
+
+let App: FC<Props> = ({ children }) => <>{children}</>;
 
 export default hot(App);
