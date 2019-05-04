@@ -5,7 +5,7 @@ import { Value } from 'slate';
 import gql from 'graphql-tag';
 import { graphql, ChildDataProps } from 'react-apollo';
 
-import { toSlate } from '@components/Editor/htmlSerializer';
+import { fromSlate } from '@components/Editor/htmlSerializer';
 import Spinner from '@components/Spinner';
 type Document = {
   content: string;
@@ -36,7 +36,7 @@ let MarkdownDocument: FC<ChildProps> = ({
   if (document) {
     let { content } = document;
 
-    return <p>{toSlate(Value.fromJSON(JSON.parse(content)))}</p>;
+    return <p>{fromSlate(Value.fromJSON(JSON.parse(content)))}</p>;
   }
 
   console.error(error);

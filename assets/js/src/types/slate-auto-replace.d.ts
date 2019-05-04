@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import { Editor } from 'slate-react';
+import { Editor, Plugin } from 'slate-react';
 
 export default function AutoReplace({
   trigger,
@@ -19,4 +19,4 @@ export default function AutoReplace({
   after?: RegExp;
 
   before?: RegExp;
-}): void;
+}): Plugin;

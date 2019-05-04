@@ -1,5 +1,5 @@
-import React, { useState, FC } from 'react';
-import { debounce, isUndefined } from 'lodash';
+import React, { Component } from 'react';
+import { debounce, isUndefined, get } from 'lodash';
 import {
   graphql,
   compose,
@@ -54,70 +54,84 @@ type ChildProps = ChildMutateProps<
   ChildDataProps<QueryInputProps, QueryResponse, QueryVariables> &
   Props;
 
-type State = {
-  content: Value | null;
-  toastIsVisible: boolean;
-};
+const SAVE_INTERVAL_IN_MILLISECONDS = 3000;
 
-let EditDocument: FC<ChildProps> = ({
-  documentId,
-  mutate,
-  data: { loading, error, document },
-}) => {
-  let [stateDocument, setDocument] = useState<State>({
-    content: null,
+class EditDocument extends Component<
+  ChildProps,
+  { documentContent: Value | null; toastIsVisible: boolean }
+> {
+  state = {
+    documentContent: null,
     toastIsVisible: false,
-  });
+  };
 
-  let onChange = ({ value }: { value: Value }): void => {
-    let { content } = stateDocument;
+  debouncedMutation = debounce(
+    this.props.mutate,
+    SAVE_INTERVAL_IN_MILLISECONDS
+  );
 
-    if (content && value.document !== content.document) {
-      let debouncedMutation = debounce(mutate, SAVE_INTERVAL_IN_MILLISECONDS);
+  onChange = ({ value }: { value: Value }): void => {
+    if (
+      this.state.documentContent &&
+      value.document !== get(this.state.documentContent, 'document')
+    ) {
+      let self = this;
 
-      debouncedMutation({
-        variables: { documentId, content: toGraphQl(value) },
+      this.debouncedMutation({
+        variables: {
+          documentId: this.props.documentId,
+          content: toGraphQl(value),
+        },
         update() {
-          setDocument({ ...stateDocument, toastIsVisible: true });
+          self.setState({ toastIsVisible: true });
 
           setTimeout(() => {
-            setDocument({ ...stateDocument, toastIsVisible: false }),
+            self.setState({ toastIsVisible: false }),
               TOAST_DISPLAY_LENGTH_IN_MILLISECONDS;
           });
         },
       });
     }
 
-    setDocument({ ...stateDocument, content: value });
+    this.setState({ documentContent: value });
   };
+  render() {
+    let {
+      props: {
+        data: { loading, error, document },
+      },
+      state: { documentContent: stateDocumentContent, toastIsVisible },
+      onChange,
+    } = this;
 
-  if (loading) {
-    return <Spinner />;
-  }
+    if (loading) {
+      return <Spinner />;
+    }
 
-  if (!isUndefined(document)) {
-    let { content: queryContent } = document;
+    if (!isUndefined(document)) {
+      let { content: queryContent } = document;
+
+      return (
+        <div>
+          <Editor
+            value={stateDocumentContent || fromGraphQl(queryContent)}
+            onChange={onChange}
+          />
+
+          {toastIsVisible && <Toast message="Saved successfully!" />}
+        </div>
+      );
+    }
 
     return (
-      <div>
-        <Editor
-          value={stateDocument.content || fromGraphQl(queryContent)}
-          onChange={onChange}
-        />
-
-        <Toast message="Saved successfully!" />
-      </div>
+      <Toast
+        message={`There was an error loading your document. ${
+          error ? error.message : error
+        }`}
+      />
     );
   }
-
-  return (
-    <Toast
-      message={`There was an error loading your document. ${
-        error ? error.message : error
-      }`}
-    />
-  );
-};
+}
 
 let EditDocumentFragments = {
   document: gql`
@@ -131,7 +145,6 @@ let EditDocumentFragments = {
 let fromGraphQl = (value: string): Value => Value.fromJSON(JSON.parse(value));
 let toGraphQl = (value: Value): string => JSON.stringify(value.toJSON());
 
-const SAVE_INTERVAL_IN_MILLISECONDS = 1000;
 const TOAST_DISPLAY_LENGTH_IN_MILLISECONDS = 3000;
 
 const DOCUMENT_QUERY = gql`

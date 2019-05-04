@@ -1,13 +1,9 @@
-import { KeyboardEvent } from 'react';
-import { Editor } from 'slate-react';
+import { EventHook } from 'slate-react';
+
 import onBackspace from './onBackspace';
 import onEnter from './onEnter';
 
-let onKeyDown = (
-  event: KeyboardEvent<HTMLInputElement>,
-  editor: Editor,
-  next: () => any
-): void => {
+let onKeyDown: EventHook = (event, editor, next) => {
   switch (event.key) {
     case 'Backspace':
       return onBackspace(event, editor, next);

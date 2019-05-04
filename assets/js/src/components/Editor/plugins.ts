@@ -3,11 +3,8 @@ import NoEmpty from 'slate-no-empty';
 import CollapseOnEscape from 'slate-collapse-on-escape';
 import isHotKey from 'is-hotkey';
 import { Plugin } from 'slate-react';
-
-import { InlineType } from '@components/Editor/htmlSerializer';
-import { ValueOf } from '@utils/types';
-import { exists, hasProperty, isUndefined } from '@utils/fp';
 import {
+  defaultTo,
   first,
   split,
   last,
@@ -20,6 +17,10 @@ import {
   cond,
   includes,
 } from 'lodash/fp';
+import { CurriedFunction1 } from 'lodash';
+
+import { InlineType } from '@components/Editor/htmlSerializer';
+import { ValueOf } from '@utils/types';
 
 type MarkHotKey = ({
   type,
@@ -208,17 +209,23 @@ export default [
     trigger: '_',
     before: /.|^/,
     change: (change, _e, matches) => {
-      let isItalic = change.value.marks.some(
-        mark => !exists(mark) && isEqual(mark.type, 'italic')
+      let isItalic = pipe(
+        (getOr('', 'type') as unknown) as CurriedFunction1<
+          { type: string } | undefined,
+          string
+        >,
+        isEqual('italic')
       );
+
+      let hasItalicMark = change.value.marks.some(isItalic);
 
       change.toggleMark({ type: 'italic' });
 
-      if (!isStartOfWord(matches) && !isItalic) {
+      if (!isStartOfWord(matches) && !hasItalicMark) {
         return change.toggleMark({ type: 'bold' });
       }
 
-      if (isStartOfWord(matches) && isItalic) {
+      if (isStartOfWord(matches) && hasItalicMark) {
         return change.replaceMark('italic', 'bold');
       }
 
@@ -231,17 +238,23 @@ export default [
     trigger: '~',
     before: /.|^/,
     change: (change, _e, matches) => {
-      let isMarked = change.value.marks.some(mark =>
-        isEqual(mark.type, 'added')
+      let isMarked = pipe(
+        (getOr('', 'type') as unknown) as CurriedFunction1<
+          { type: string } | undefined,
+          string
+        >,
+        isEqual('added')
       );
+
+      let hasMarks = change.value.marks.some(isMarked);
 
       change.toggleMark({ type: 'added' });
 
-      if (!isStartOfWord(matches) && !isMarked) {
+      if (!isStartOfWord(matches) && !hasMarks) {
         return change.toggleMark({ type: 'deleted' });
       }
 
-      if (isStartOfWord(matches) && isMarked) {
+      if (isStartOfWord(matches) && hasMarks) {
         return change.replaceMark('added', 'deleted');
       }
 
@@ -266,7 +279,7 @@ export default [
   AutoReplace({
     trigger: 'space',
     before: /^(---|===|\*\*\*)/,
-    change: (change, _e, matches) =>
+    change: (change, _e, _matches) =>
       change.wrapBlock({ type: 'horizontal-rule' }),
   }),
 
@@ -274,7 +287,7 @@ export default [
   AutoReplace({
     trigger: 'enter',
     before: /^(---|===|\*\*\*)/,
-    change: (change, _e, matches) =>
+    change: (change, _e, _matches) =>
       change.wrapBlock({ type: 'horizontal-rule' }),
   }),
 
@@ -291,23 +304,25 @@ export default [
   }),
 ];
 
+type CurriedRegExpMatchArray = CurriedFunction1<RegExpMatchArray, string>;
+
 let lastCharacter = pipe(
-  getOr('', 'before.input'),
+  (getOr('', 'before.input') as unknown) as CurriedRegExpMatchArray,
   last
 );
 
 let isStartOfWord = pipe(
-  lastCharacter,
+  (lastCharacter as unknown) as CurriedRegExpMatchArray,
   isEqual(' ')
 );
 
 let splitLink = pipe(
-  getOr('', 'before[0]'),
+  (getOr('', 'before[0]') as unknown) as CurriedRegExpMatchArray,
   split('](')
 );
 
 let title = pipe(
-  splitLink,
+  (splitLink as unknown) as CurriedRegExpMatchArray,
   first,
   tail,
   join('')
@@ -316,8 +331,10 @@ let title = pipe(
 let href = pipe(
   splitLink,
   last,
+  defaultTo(''),
   split(')'),
-  first
+  first,
+  defaultTo('')
 );
 
 let alt = pipe(
@@ -331,48 +348,55 @@ let alt = pipe(
 let src = href;
 
 let iframeSrc = pipe(
-  getOr('', 'before[0]'),
+  (getOr('', 'before[0]') as unknown) as CurriedRegExpMatchArray,
   pipe(
     split('src="'),
     last,
+    defaultTo(''),
     split('"'),
     first
+    // defaultTo('')
   )
 );
 
 let isImage = pipe(
-  getOr('', 'before[0]'),
+  (getOr('', 'before[0]') as unknown) as CurriedRegExpMatchArray,
   includes('!')
 );
 
-let imageData = (
-  matches: RegExpMatchArray
-): { type: 'image'; data: { src: string; alt: string } } => ({
+type ImageData = { type: 'image'; data: { src: string; alt: string } };
+
+type ImageDataFn = (matches: RegExpMatchArray) => ImageData;
+
+let imageData: ImageDataFn = matches => ({
   type: 'image',
   data: { src: src(matches), alt: alt(matches) },
 });
 
-let linkData = (
-  matches: RegExpMatchArray
-): {
-  type: 'link';
-  data: { href: string; title: string };
-} => ({
+type LinkData = { type: 'link'; data: { href: string; title: string } };
+
+type LinkDataFn = (matches: RegExpMatchArray) => LinkData;
+
+let linkData: LinkDataFn = matches => ({
   type: 'link',
   data: { href: href(matches), title: title(matches) },
 });
 
-let imageOrLink = cond([[isImage, imageData], [stubTrue, linkData]]);
+let imageOrLink = cond<RegExpMatchArray, ImageData | LinkData>([
+  [isImage, imageData],
+  [stubTrue, linkData],
+]);
 
 let isIframe = pipe(
-  getOr('', 'before[0]'),
+  (getOr('', 'before[0]') as unknown) as CurriedRegExpMatchArray,
   includes('src')
 );
 
 let stripEmbedTag = pipe(
-  getOr('', 'before[0]'),
+  (getOr('', 'before[0]') as unknown) as CurriedRegExpMatchArray,
   split('embed('),
   last,
+  defaultTo(''),
   split(')'),
   first
 );

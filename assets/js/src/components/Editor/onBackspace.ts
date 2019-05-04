@@ -1,15 +1,10 @@
-import { KeyboardEvent } from 'react';
-import { Editor } from 'slate-react';
+import { EventHook } from 'slate-react';
 /**
  * On backspace, if at the start of a non-paragraph, convert it back into a
  * paragraph node.
  */
 
-export default function onBackspace(
-  event: KeyboardEvent<HTMLInputElement>,
-  editor: Editor,
-  next: () => any
-): void {
+let onBackspace: EventHook = (event, editor, next) => {
   let { value, unwrapBlock, setBlocks } = editor;
 
   let {
@@ -30,4 +25,6 @@ export default function onBackspace(
   if (startBlock.type === 'list-item') {
     unwrapBlock('bulleted-list');
   }
-}
+};
+
+export default onBackspace;

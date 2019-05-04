@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
-import { RenderNodeProps, Editor } from 'slate-react';
+import { RenderNodeProps } from 'slate-react';
+import { Editor } from 'slate';
 import Checkbox from '@components/Checkbox';
 
 /**

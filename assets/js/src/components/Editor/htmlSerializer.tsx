@@ -1,6 +1,5 @@
 import React from 'react';
 import Html, { Rule } from 'slate-html-serializer';
-import { isUndefined } from 'lodash';
 import { Value } from 'slate';
 
 import { ValueOf } from '@utils/types';

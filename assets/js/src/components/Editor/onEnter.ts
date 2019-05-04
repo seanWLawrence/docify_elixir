@@ -1,5 +1,4 @@
-import { KeyboardEvent } from 'react';
-import { Editor } from 'slate-react';
+import { EventHook } from 'slate-react';
 import onBackspace from './onBackspace';
 
 /**
@@ -7,11 +6,7 @@ import onBackspace from './onBackspace';
  * create a new paragraph below it.
  */
 
-export default function onEnter(
-  event: KeyboardEvent<HTMLInputElement>,
-  editor: Editor,
-  next: () => any
-) {
+let onEnter: EventHook = (event, editor, next) => {
   let { value, splitBlock } = editor;
 
   let {
@@ -42,4 +37,6 @@ export default function onEnter(
   event.preventDefault();
 
   splitBlock(1).setBlocks('paragraph');
-}
+};
+
+export default onEnter;

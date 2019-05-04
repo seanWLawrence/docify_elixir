@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
-import { RenderMarkProps, Editor } from 'slate-react';
+import { RenderMarkProps } from 'slate-react';
+import { Editor } from 'slate';
 
 export default function renderMark(
   props: RenderMarkProps,

@@ -1,20 +1,32 @@
 import React, { Component } from 'react';
-import Types from 'prop-types';
 import { Editor as Slate } from 'slate-react';
+import { Value } from 'slate';
 
 import renderNode from './renderNode';
 import renderMark from './renderMark';
 import onKeyDown from './onKeyDown';
 import plugins from './plugins';
 
+interface Props {
+  onChange: (change: { operations: any; value: Value }) => any;
+  value: Value;
+  readOnly: boolean;
+}
+
+type SlateRef = Slate | null;
+
 // TODO update and add schema with fixed heading
-export default class Editor extends Component {
-  ref = editor => {
-    this.editor = editor;
+export default class Editor extends Component<Props, {}> {
+  editor!: Slate | null;
+
+  ref = (instance: SlateRef): void => {
+    this.editor = instance;
   };
 
   componentDidMount() {
-    this.editor.moveFocusToEndOfDocument();
+    if (this.editor !== null) {
+      this.editor.moveFocusToEndOfDocument();
+    }
   }
 
   render() {
@@ -40,12 +52,6 @@ export default class Editor extends Component {
       />
     );
   }
-
-  static propTypes = {
-    value: Types.object.isRequired,
-    onChange: Types.func,
-    readOnly: Types.bool,
-  };
 
   static defaultProps = {
     readOnly: false,
