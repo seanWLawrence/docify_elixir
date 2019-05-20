@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { RenderNodeProps } from 'slate-react';
 import { Editor } from 'slate';
-import Checkbox from '@components/Checkbox';
+import Checkbox from 'components/Checkbox';
 
 /**
  * Render an HTML element (aka Slate node)

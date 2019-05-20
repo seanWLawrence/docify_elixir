@@ -11,12 +11,7 @@ config :docify, DocifyWeb.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  watchers: [
-    {"node",
-     [
-       "scripts/frontend_start.js"
-     ]}
-  ]
+  watchers: [yarn: ["start"]]
 
 # ## SSL Support
 #
@@ -46,6 +41,7 @@ config :docify, DocifyWeb.Endpoint,
 config :docify, DocifyWeb.Endpoint,
   live_reload: [
     patterns: [
+      ~r{src/.*(ts|tsx|js|css|svg)$},
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
       ~r{priv/gettext/.*(po)$},
       ~r{lib/docify_web/views/.*(ex)$},

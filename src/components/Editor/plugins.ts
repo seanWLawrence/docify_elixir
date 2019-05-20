@@ -19,8 +19,8 @@ import {
 } from 'lodash/fp';
 import { CurriedFunction1 } from 'lodash';
 
-import { InlineType } from '@components/Editor/htmlSerializer';
-import { ValueOf } from '@utils/types';
+import { InlineType } from 'components/Editor/htmlSerializer';
+import { ValueOf } from 'utils/types';
 
 type MarkHotKey = ({
   type,

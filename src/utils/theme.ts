@@ -1,4 +1,4 @@
-import { px, rem } from '@utils/mixins';
+import { px, rem } from 'utils/mixins';
 
 export const BASE_FONT_SIZE = 10;
 

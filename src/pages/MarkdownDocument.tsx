@@ -5,8 +5,8 @@ import { Value } from 'slate';
 import gql from 'graphql-tag';
 import { graphql, ChildDataProps } from 'react-apollo';
 
-import { fromSlate } from '@components/Editor/htmlSerializer';
-import Spinner from '@components/Spinner';
+import { fromSlate } from 'components/Editor/htmlSerializer';
+import Spinner from 'components/Spinner';
 type Document = {
   content: string;
 };

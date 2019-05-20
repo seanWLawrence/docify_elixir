@@ -1,5 +1,5 @@
 import { css, SerializedStyles } from '@emotion/core';
-import theme, { TABLET_WIDTH, DESKTOP_WIDTH, RETINA_WIDTH } from '@utils/theme';
+import theme, { TABLET_WIDTH, DESKTOP_WIDTH, RETINA_WIDTH } from 'utils/theme';
 
 export let px = (num: number): string => `${num}px`;
 export let em = (num: number): string => `${num}em`;

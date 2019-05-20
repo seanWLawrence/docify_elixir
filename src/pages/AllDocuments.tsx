@@ -10,12 +10,9 @@ import { DataProxy } from 'apollo-cache';
 import gql from 'graphql-tag';
 import { navigate, RouteComponentProps } from '@reach/router';
 
-import Document, {
-  DocumentType,
-  DocumentFragments,
-} from '@components/Document';
-import Spinner from '@components/Spinner';
-import Toast from '@components/Toast';
+import Document, { DocumentType, DocumentFragments } from 'components/Document';
+import Spinner from 'components/Spinner';
+import Toast from 'components/Toast';
 
 interface AllDocumentsDocument extends DocumentType {
   id: number;

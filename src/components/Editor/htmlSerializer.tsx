@@ -2,7 +2,7 @@ import React from 'react';
 import Html, { Rule } from 'slate-html-serializer';
 import { Value } from 'slate';
 
-import { ValueOf } from '@utils/types';
+import { ValueOf } from 'utils/types';
 
 export interface BlockType {
   blockquote: 'block-quote';

@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -14,7 +18,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-    "baseUrl": "./assets/js/src",
+    "baseUrl": "src",
     "strictBindCallApply": true,
     "incremental": true,
     "noImplicitAny": true,
@@ -25,14 +29,9 @@
     "pretty": true,
     "strictFunctionTypes": true,
     "strictNullChecks": true,
-    "strictPropertyInitialization": true,
-    "paths": {
-      "*": ["types/*"],
-      "@components/*": ["components/*"],
-      "@config/*": ["config/*"],
-      "@pages/*": ["pages/*"],
-      "@utils/*": ["utils/*"]
-    }
+    "strictPropertyInitialization": true
   },
-  "include": ["assets/js/src"]
+  "include": [
+    "src"
+  ]
 }

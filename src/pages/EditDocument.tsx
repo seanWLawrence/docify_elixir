@@ -10,9 +10,9 @@ import gql from 'graphql-tag';
 import { Value } from 'slate';
 import { RouteComponentProps } from '@reach/router';
 
-import Editor from '@components/Editor';
-import Toast from '@components/Toast';
-import Spinner from '@components/Spinner';
+import Editor from 'components/Editor';
+import Toast from 'components/Toast';
+import Spinner from 'components/Spinner';
 type Props = {
   documentId: number;
 } & RouteComponentProps;
@@ -86,8 +86,10 @@ class EditDocument extends Component<
           self.setState({ toastIsVisible: true });
 
           setTimeout(() => {
-            self.setState({ toastIsVisible: false }),
-              TOAST_DISPLAY_LENGTH_IN_MILLISECONDS;
+            return (
+              self.setState({ toastIsVisible: false }),
+              TOAST_DISPLAY_LENGTH_IN_MILLISECONDS
+            );
           });
         },
       });
