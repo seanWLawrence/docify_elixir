@@ -1,22 +1,24 @@
-import { ChangeEvent } from 'react';
-import { Editor, Plugin } from 'slate-react';
+declare module 'slate-auto-replace' {
+  import { ChangeEvent } from 'react';
 
-export default function AutoReplace({
-  trigger,
-  change,
-  after,
-  before,
-}: {
-  trigger: string | RegExp;
-  trigger(string): boolean;
+  import { Editor, Plugin } from 'slate-react';
 
-  change(
-    change: Editor,
-    _e: ChangeEvent<HTMLInputElement>,
-    _matches: RegExpMatchArray
-  ): void;
+  export default function AutoReplace({
+    trigger,
+    change,
+    after,
+    before,
+  }: {
+    trigger: string | RegExp;
 
-  after?: RegExp;
+    change(
+      change: Editor,
+      _e: ChangeEvent<HTMLInputElement>,
+      _matches: RegExpMatchArray
+    ): void;
 
-  before?: RegExp;
-}): Plugin;
+    after?: RegExp;
+
+    before?: RegExp;
+  }): Plugin;
+}

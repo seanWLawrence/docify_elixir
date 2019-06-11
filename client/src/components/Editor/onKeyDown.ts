@@ -1,5 +1,4 @@
-import { EventHook } from 'slate-react';
-
+import { EventHook } from 'types/eventHook';
 import onBackspace from './onBackspace';
 import onEnter from './onEnter';
 
