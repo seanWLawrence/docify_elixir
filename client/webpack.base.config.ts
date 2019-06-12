@@ -1,17 +1,15 @@
-let {
+import {
   entryPath,
   outputPath,
   contextPath,
   srcPath,
   templatePath,
-} = require('./config/paths');
+} from './paths';
 
-let { resolve } = require('path');
-
-let FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
-let HtmlWebpackPlugin = require('html-webpack-plugin');
-let ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-let TsConfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import TsConfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 
 let isDev = process.env.NODE_ENV === 'development';
 
@@ -101,7 +99,7 @@ let plugins = [
   }),
 ];
 
-let baseConfig = {
+export default {
   entry: entryPath,
   output: {
     path: outputPath,
@@ -112,17 +110,14 @@ let baseConfig = {
     rules,
   },
   resolve: {
-    // alias: {
-    //   components: resolve(__dirname, 'frontend/src/components/'),
-    // },
     plugins: [
       new TsConfigPathsPlugin({
-        baseUrl: './frontend/src',
-        configFile: resolve(__dirname, 'tsconfig.json'),
+        logInfoToStdOut: true,
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
       }),
     ],
+    extensions: ['.ts', 'tsx', '.wasm', '.mjs', '.js', '.json'],
+    modules: [srcPath, 'node_modules'],
   },
   plugins,
 };
-
-module.exports = baseConfig;

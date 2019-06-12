@@ -7,9 +7,9 @@ import { ApolloProvider } from 'react-apollo';
 import Spinner from 'components/Spinner';
 import client from 'config/apolloClient';
 
-let Routes = lazy(() => import('config/Routes'));
+const Routes = lazy(() => import('config/Routes'));
 
-let root = document.getElementById('root');
+const root = document.getElementById('root');
 
 render(
   <Suspense fallback={<Spinner />}>

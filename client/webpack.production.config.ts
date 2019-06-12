@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/no-var-requires */
 const merge = require('webpack-merge');
 
 const ImageminPlugin = require('imagemin-webpack');
@@ -13,10 +15,12 @@ const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 
-let { publicPath } = require('./config/paths');
+let { publicPath } = require('./paths');
 
 let baseConfig = require('./webpack.base.config').default;
+
 let prodConfig = {
+  mode: 'production',
   optimization: {
     minimizer: [new TerserPlugin()],
   },
@@ -66,4 +70,4 @@ let prodConfig = {
   ],
 };
 
-module.exports = merge(baseConfig, prodConfig);
+export default merge(baseConfig, prodConfig);
