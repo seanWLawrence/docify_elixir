@@ -63,8 +63,8 @@
     "webpack-pwa-manifest": "^4.0.0"
   },
   "scripts": {
-    "start": "cross-env TS_NODE_PROJECT=\"tsconfig.webpack.json\" webpack-dev-server --config-name=development",
-    "build": "cross-env TS_NODE_PROJECT=\"tsconfig.webpack.json\" webpack --config-name=production",
+    "start": "cross-env webpack-dev-server --config-name=development",
+    "build": "cross-env webpack --config-name=production",
     "analyze": "cross-env TS_NODE_PROJECT=\"tsconfig.webpack.json\" webpack --config-name=analyze",
     "test": "jest"
   },
@@ -82,7 +82,10 @@
   },
   "devDependencies": {
     "@reach/router": "^1.2.1",
+    "@types/clean-webpack-plugin": "^0.1.3",
+    "@types/friendly-errors-webpack-plugin": "^0.1.1",
     "@types/graphql": "^14.2.0",
+    "@types/html-webpack-plugin": "^3.2.0",
     "@types/immutable": "^3.8.7",
     "@types/is-hotkey": "^0.1.1",
     "@types/jest": "^24.0.13",
@@ -95,14 +98,19 @@
     "@types/slate-html-serializer": "^0.6.3",
     "@types/slate-react": "^0.21.2",
     "@types/webpack": "^4.4.32",
+    "@types/webpack-dev-server": "^3.1.6",
+    "@types/webpack-manifest-plugin": "^2.0.0",
     "@types/webpack-merge": "^4.1.5",
     "@typescript-eslint/eslint-plugin": "^1.10.2",
     "@typescript-eslint/parser": "^1.10.2",
+    "clean-webpack-plugin": "^3.0.0",
     "eslint-config-prettier": "^4.3.0",
     "eslint-plugin-react-app": "^5.0.1",
+    "source-map-loader": "^0.2.4",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.2.0",
     "tsconfig-paths": "^3.8.0",
-    "typescript": "^3.4.5"
+    "typescript": "^3.4.5",
+    "webpack-manifest-plugin": "^2.0.4"
   }
 }

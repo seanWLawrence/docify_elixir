@@ -7,8 +7,8 @@ import Editor from 'components/Editor';
 import { toSlate } from 'components/Editor/htmlSerializer';
 import demoContent from 'components/Editor/_demoFixture';
 
-let DemoDocument: FC<RouteComponentProps> = () => {
-  let [content, setContent] = useState(toSlate(demoContent));
+const DemoDocument: FC<RouteComponentProps> = () => {
+  const [content, setContent] = useState(toSlate(demoContent));
 
   return (
     <div>

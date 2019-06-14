@@ -1,22 +1,17 @@
 import React, { Component } from 'react';
 import { Editor as Slate } from 'slate-react';
-import { Value } from 'slate';
+import { EditorProperties } from 'slate';
 
 import renderNode from './renderNode';
 import renderMark from './renderMark';
 import onKeyDown from './onKeyDown';
 import plugins from './plugins';
-
-interface Props {
-  onChange: (change: { operations: any; value: Value }) => any;
-  value: Value;
-  readOnly: boolean;
-}
+import defaultValue from './defaultValue';
 
 type SlateRef = Slate | null;
 
 // TODO update and add schema with fixed heading
-export default class Editor extends Component<Props, {}> {
+export default class Editor extends Component<EditorProperties, {}> {
   editor!: Slate | null;
 
   ref = (instance: SlateRef): void => {
@@ -30,7 +25,7 @@ export default class Editor extends Component<Props, {}> {
   }
 
   render() {
-    let {
+    const {
       ref,
       props: { onChange, value, readOnly },
     } = this;
@@ -44,7 +39,7 @@ export default class Editor extends Component<Props, {}> {
         renderMark={renderMark}
         onKeyDown={onKeyDown}
         onChange={onChange}
-        value={value}
+        value={value || defaultValue}
         ref={ref}
         plugins={plugins}
         placeholder="Start writing here..."

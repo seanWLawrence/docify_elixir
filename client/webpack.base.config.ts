@@ -1,19 +1,17 @@
-import {
-  entryPath,
-  outputPath,
-  contextPath,
-  srcPath,
-  templatePath,
-} from './paths';
+import { resolve } from 'path';
+import { Plugin, Configuration, RuleSetRule } from 'webpack';
+import { entryPath, outputPath, contextPath, srcPath } from './paths';
 
 import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import TsConfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import ManifestPlugin from 'webpack-manifest-plugin';
 
-let isDev = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'development';
 
-let rules = [
+const rules: RuleSetRule[] = [
   {
     enforce: 'pre',
     test: /\.(ts|tsx)$/,
@@ -23,7 +21,13 @@ let rules = [
       fix: true,
       cache: isDev ? true : false,
       formatter: require('eslint-formatter-pretty'),
+      configfile: resolve(__dirname, 'eslintrc.js'),
     },
+  },
+  {
+    enforce: 'pre',
+    test: /\.js$/,
+    use: ['source-map-loader'],
   },
   {
     test: /\.(ts|tsx)$/,
@@ -33,7 +37,7 @@ let rules = [
         loader: 'babel-loader',
         options: {
           presets: [
-            '@babel/preset-env',
+            ['@babel/preset-env', { modules: false }],
             '@babel/preset-react',
             '@babel/preset-typescript',
           ],
@@ -41,16 +45,12 @@ let rules = [
             '@babel/plugin-proposal-object-rest-spread',
             '@babel/plugin-syntax-dynamic-import',
             '@babel/plugin-transform-runtime',
+            '@babel/plugin-proposal-class-properties',
           ],
           cacheDirectory: isDev ? false : true,
         },
       },
-      isDev
-        ? null
-        : {
-            loader: 'minify-cssinjs-loader',
-          },
-    ].filter(Boolean),
+    ],
   },
   {
     test: /\.graphql?$/,
@@ -86,24 +86,29 @@ let rules = [
   },
 ];
 
-let plugins = [
+const plugins: Plugin[] = [
   new FriendlyErrorsWebpackPlugin(),
   new HtmlWebpackPlugin({
-    template: templatePath,
     hash: isDev ? false : true,
+    template: './src/index.html',
+    filename: 'index.html',
+    inject: true,
   }),
   new ForkTsCheckerWebpackPlugin({
     checkSyntacticErrors: true,
     tslintAutoFix: true,
-    watch: isDev ? srcPath : null,
+    watch: isDev ? srcPath : void 0,
   }),
+  new CleanWebpackPlugin(),
+  new ManifestPlugin({ writeToFileEmit: true }),
 ];
 
-export default {
+const baseConfig: Configuration = {
   entry: entryPath,
   output: {
     path: outputPath,
-    filename: isDev ? '[filename].js' : '[chunkhash].js',
+    filename: '[name].[hash].js',
+    chunkFilename: '[chunkhash].js',
   },
   context: contextPath,
   module: {
@@ -112,12 +117,16 @@ export default {
   resolve: {
     plugins: [
       new TsConfigPathsPlugin({
-        logInfoToStdOut: true,
-        extensions: ['.ts', '.tsx', '.js', '.jsx'],
+        configFile: './tsconfig.json',
+        logLevel: 'INFO',
+        extensions: ['.ts', '.tsx'],
+        mainFields: ['browser', 'main'],
       }),
     ],
-    extensions: ['.ts', 'tsx', '.wasm', '.mjs', '.js', '.json'],
+    extensions: ['.ts', '.tsx', '.js', '.json'],
     modules: [srcPath, 'node_modules'],
   },
   plugins,
 };
+
+export default baseConfig;

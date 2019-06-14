@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 
-type Props = {
+interface Props {
   message: string;
   // isVisible: boolean
-};
+}
 
-let Toast: FC<Props> = ({ message }) => (
+const Toast: FC<Props> = ({ message }) => (
   <div>
     <div>{message}</div>
   </div>

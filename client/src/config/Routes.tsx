@@ -1,11 +1,11 @@
 import React, { lazy, FC } from 'react';
 import { Router } from '@reach/router';
 
-let EditDocument = lazy(() => import('../pages/EditDocument'));
-let AllDocuments = lazy(() => import('../pages/AllDocuments'));
-let DemoDocument = lazy(() => import('../pages/DemoDocument'));
+const EditDocument = lazy(() => import('../pages/EditDocument'));
+const AllDocuments = lazy(() => import('../pages/AllDocuments'));
+const DemoDocument = lazy(() => import('../pages/DemoDocument'));
 
-let Routes: FC<{}> = () => {
+const Routes: FC<{}> = () => {
   return (
     <Router>
       <DemoDocument path="/demo" />

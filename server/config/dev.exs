@@ -10,8 +10,7 @@ config :docify, DocifyWeb.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
-  check_origin: false,
-  watchers: [yarn: ["start"]]
+  check_origin: false
 
 # ## SSL Support
 #

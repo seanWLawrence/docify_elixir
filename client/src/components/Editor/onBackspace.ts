@@ -4,10 +4,10 @@ import { EventHook } from 'slate-react';
  * paragraph node.
  */
 
-let onBackspace: EventHook = (event, editor, next) => {
-  let { value, unwrapBlock, setBlocks } = editor;
+const onBackspace: EventHook = (event, editor, next) => {
+  const { value, unwrapBlock, setBlocks } = editor;
 
-  let {
+  const {
     selection: { isExpanded, start },
     startBlock,
   } = value;

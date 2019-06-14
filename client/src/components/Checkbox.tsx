@@ -1,29 +1,29 @@
 import React, { ReactNode, FC, ChangeEvent } from 'react';
 import { Editor, Block, Inline } from 'slate';
 import { RenderAttributes } from 'slate-react';
-type Props = {
+interface Props {
   editor: Editor;
   node: Block | Inline;
   attributes: RenderAttributes;
   children: ReactNode;
   readOnly?: boolean;
-};
+}
 
-let Checkbox: FC<Props> = ({
+const Checkbox: FC<Props> = ({
   editor,
   node,
   attributes,
   children,
   readOnly = false,
 }) => {
-  let onChange = (event: ChangeEvent<HTMLInputElement>): void => {
+  const onChange = (event: ChangeEvent<HTMLInputElement>): void => {
     editor.setNodeByKey(node.key, {
       type: 'checkbox',
       data: { checked: (event.target as HTMLInputElement).checked },
     });
   };
 
-  let isChecked: boolean = node.data.get('checked');
+  const isChecked: boolean = node.data.get('checked');
 
   return (
     <div {...attributes}>

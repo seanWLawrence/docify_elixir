@@ -5,17 +5,22 @@ import { Value } from 'slate';
 
 import Editor from './Editor';
 
+const fromGraphQl = (value: string): Value => Value.fromJSON(JSON.parse(value));
+
+const toPrettyDate = (date: Date): string =>
+  new Date(date).toLocaleDateString('en-US');
+
 export interface DocumentType {
   id: number;
   content: string;
   updatedAt: Date;
 }
 
-type Props = {
+interface Props {
   document: DocumentType;
-};
+}
 
-let Document: FC<Props> = ({ document: { id, content, updatedAt } }) => {
+const Document: FC<Props> = ({ document: { id, content, updatedAt } }) => {
   return (
     <Link key={id} to={`/documents/edit/${id}`}>
       <div>
@@ -37,8 +42,3 @@ export const DocumentFragments = {
 };
 
 export default Document;
-
-let fromGraphQl = (value: string): Value => Value.fromJSON(JSON.parse(value));
-
-let toPrettyDate = (date: Date): string =>
-  new Date(date).toLocaleDateString('en-US');

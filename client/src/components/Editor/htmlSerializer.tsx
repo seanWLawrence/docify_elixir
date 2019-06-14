@@ -66,30 +66,30 @@ const INLINE_TYPE: InlineType = {
   mark: 'added',
 };
 
-let isBlockTypeKey = (str: string): boolean =>
+const isBlockTypeKey = (str: string): boolean =>
   Object.keys(BLOCK_TYPE).includes(str);
 
-let isInlineTypeKey = (str: string): boolean =>
+const isInlineTypeKey = (str: string): boolean =>
   Object.keys(INLINE_TYPE).includes(str);
 
-let isBlockType = (
+const isBlockType = (
   htmlElementType: BlockTypeKey | string
 ): void | BlockTypeValue =>
   isBlockTypeKey(htmlElementType)
     ? BLOCK_TYPE[htmlElementType as BlockTypeKey]
     : void 0;
 
-let isInlineType = (
+const isInlineType = (
   htmlElementType: InlineTypeKey | string
 ): void | InlineTypeValue =>
   isInlineTypeKey(htmlElementType)
     ? INLINE_TYPE[htmlElementType as InlineTypeKey]
     : void 0;
 
-let rules: Rule[] = [
+const rules: Rule[] = [
   {
     deserialize(el, next) {
-      let htmlElementType = el.tagName.toLowerCase();
+      const htmlElementType = el.tagName.toLowerCase();
 
       if (isBlockType(htmlElementType)) {
         return {
@@ -203,10 +203,10 @@ let rules: Rule[] = [
   },
 ];
 
-let htmlSerializer = new Html({ rules });
+const htmlSerializer = new Html({ rules });
 
-export let toSlate = (content: string): Value =>
+export const toSlate = (content: string): Value =>
   htmlSerializer.deserialize(content);
 
-export let fromSlate = (content: Value): string =>
+export const fromSlate = (content: Value): string =>
   htmlSerializer.serialize(content);

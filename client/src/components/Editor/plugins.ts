@@ -22,6 +22,111 @@ import { CurriedFunction1 } from 'lodash';
 import { InlineType } from 'components/Editor/htmlSerializer';
 import { ValueOf } from 'utils/types';
 
+type CurriedRegExpMatchArray = CurriedFunction1<RegExpMatchArray, string>;
+
+const lastCharacter = pipe(
+  (getOr('', 'before.input') as unknown) as CurriedRegExpMatchArray,
+  last
+);
+
+const isStartOfWord = pipe(
+  (lastCharacter as unknown) as CurriedRegExpMatchArray,
+  isEqual(' ')
+);
+
+const splitLink = pipe(
+  (getOr('', 'before[0]') as unknown) as CurriedRegExpMatchArray,
+  split('](')
+);
+
+const title = pipe(
+  (splitLink as unknown) as CurriedRegExpMatchArray,
+  first,
+  tail,
+  join('')
+);
+
+const href = pipe(
+  splitLink,
+  last,
+  defaultTo(''),
+  split(')'),
+  first,
+  defaultTo('')
+);
+
+const alt = pipe(
+  splitLink,
+  first,
+  tail,
+  tail,
+  join('')
+);
+
+const src = href;
+
+const iframeSrc = pipe(
+  (getOr('', 'before[0]') as unknown) as CurriedRegExpMatchArray,
+  pipe(
+    split('src="'),
+    last,
+    defaultTo(''),
+    split('"'),
+    first
+    // defaultTo('')
+  )
+);
+
+const isImage = pipe(
+  (getOr('', 'before[0]') as unknown) as CurriedRegExpMatchArray,
+  includes('!')
+);
+
+interface ImageData {
+  type: 'image';
+  data: { src: string; alt: string };
+}
+
+type ImageDataFn = (matches: RegExpMatchArray) => ImageData;
+
+const imageData: ImageDataFn = matches => ({
+  type: 'image',
+  data: { src: src(matches), alt: alt(matches) },
+});
+
+interface LinkData {
+  type: 'link';
+  data: { href: string; title: string };
+}
+
+type LinkDataFn = (matches: RegExpMatchArray) => LinkData;
+
+const linkData: LinkDataFn = matches => ({
+  type: 'link',
+  data: { href: href(matches), title: title(matches) },
+});
+
+const imageOrLink = cond<RegExpMatchArray, ImageData | LinkData>([
+  [isImage, imageData],
+  [stubTrue, linkData],
+]);
+
+const isIframe = pipe(
+  (getOr('', 'before[0]') as unknown) as CurriedRegExpMatchArray,
+  includes('src')
+);
+
+const stripEmbedTag = pipe(
+  (getOr('', 'before[0]') as unknown) as CurriedRegExpMatchArray,
+  split('embed('),
+  last,
+  defaultTo(''),
+  split(')'),
+  first
+);
+
+const embedSrc = cond([[isIframe, iframeSrc], [stubTrue, stripEmbedTag]]);
+
 type MarkHotKey = ({
   type,
   key,
@@ -30,7 +135,7 @@ type MarkHotKey = ({
   key: string;
 }) => Plugin;
 
-let MarkHotkey: MarkHotKey = ({ type, key }) => {
+const MarkHotkey: MarkHotKey = ({ type, key }) => {
   return {
     onKeyDown(event, editor, next) {
       if (isHotKey(key, event as KeyboardEvent)) {
@@ -186,8 +291,8 @@ export default [
     trigger: '*',
     before: /.|^/,
     change: (change, _e, matches) => {
-      let isItalic = change.value.marks.some(mark =>
-        isEqual(mark!.type, 'italic')
+      const isItalic = change.value.marks.some(mark =>
+        isEqual(mark && mark.type, 'italic')
       );
 
       change.toggleMark({ type: 'italic' });
@@ -209,7 +314,7 @@ export default [
     trigger: '_',
     before: /.|^/,
     change: (change, _e, matches) => {
-      let isItalic = pipe(
+      const isItalic = pipe(
         (getOr('', 'type') as unknown) as CurriedFunction1<
           { type: string } | undefined,
           string
@@ -217,7 +322,7 @@ export default [
         isEqual('italic')
       );
 
-      let hasItalicMark = change.value.marks.some(isItalic);
+      const hasItalicMark = change.value.marks.some(isItalic);
 
       change.toggleMark({ type: 'italic' });
 
@@ -238,7 +343,7 @@ export default [
     trigger: '~',
     before: /.|^/,
     change: (change, _e, matches) => {
-      let isMarked = pipe(
+      const isMarked = pipe(
         (getOr('', 'type') as unknown) as CurriedFunction1<
           { type: string } | undefined,
           string
@@ -246,7 +351,7 @@ export default [
         isEqual('added')
       );
 
-      let hasMarks = change.value.marks.some(isMarked);
+      const hasMarks = change.value.marks.some(isMarked);
 
       change.toggleMark({ type: 'added' });
 
@@ -303,102 +408,3 @@ export default [
     },
   }),
 ];
-
-type CurriedRegExpMatchArray = CurriedFunction1<RegExpMatchArray, string>;
-
-let lastCharacter = pipe(
-  (getOr('', 'before.input') as unknown) as CurriedRegExpMatchArray,
-  last
-);
-
-let isStartOfWord = pipe(
-  (lastCharacter as unknown) as CurriedRegExpMatchArray,
-  isEqual(' ')
-);
-
-let splitLink = pipe(
-  (getOr('', 'before[0]') as unknown) as CurriedRegExpMatchArray,
-  split('](')
-);
-
-let title = pipe(
-  (splitLink as unknown) as CurriedRegExpMatchArray,
-  first,
-  tail,
-  join('')
-);
-
-let href = pipe(
-  splitLink,
-  last,
-  defaultTo(''),
-  split(')'),
-  first,
-  defaultTo('')
-);
-
-let alt = pipe(
-  splitLink,
-  first,
-  tail,
-  tail,
-  join('')
-);
-
-let src = href;
-
-let iframeSrc = pipe(
-  (getOr('', 'before[0]') as unknown) as CurriedRegExpMatchArray,
-  pipe(
-    split('src="'),
-    last,
-    defaultTo(''),
-    split('"'),
-    first
-    // defaultTo('')
-  )
-);
-
-let isImage = pipe(
-  (getOr('', 'before[0]') as unknown) as CurriedRegExpMatchArray,
-  includes('!')
-);
-
-type ImageData = { type: 'image'; data: { src: string; alt: string } };
-
-type ImageDataFn = (matches: RegExpMatchArray) => ImageData;
-
-let imageData: ImageDataFn = matches => ({
-  type: 'image',
-  data: { src: src(matches), alt: alt(matches) },
-});
-
-type LinkData = { type: 'link'; data: { href: string; title: string } };
-
-type LinkDataFn = (matches: RegExpMatchArray) => LinkData;
-
-let linkData: LinkDataFn = matches => ({
-  type: 'link',
-  data: { href: href(matches), title: title(matches) },
-});
-
-let imageOrLink = cond<RegExpMatchArray, ImageData | LinkData>([
-  [isImage, imageData],
-  [stubTrue, linkData],
-]);
-
-let isIframe = pipe(
-  (getOr('', 'before[0]') as unknown) as CurriedRegExpMatchArray,
-  includes('src')
-);
-
-let stripEmbedTag = pipe(
-  (getOr('', 'before[0]') as unknown) as CurriedRegExpMatchArray,
-  split('embed('),
-  last,
-  defaultTo(''),
-  split(')'),
-  first
-);
-
-let embedSrc = cond([[isIframe, iframeSrc], [stubTrue, stripEmbedTag]]);

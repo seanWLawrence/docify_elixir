@@ -6,10 +6,10 @@ import onBackspace from './onBackspace';
  * create a new paragraph below it.
  */
 
-let onEnter: EventHook = (event, editor, next) => {
-  let { value, splitBlock } = editor;
+const onEnter: EventHook = (event, editor, next) => {
+  const { value, splitBlock } = editor;
 
-  let {
+  const {
     selection: { start, end, isExpanded },
     startBlock,
   } = value;

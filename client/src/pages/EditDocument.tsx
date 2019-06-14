@@ -17,32 +17,32 @@ type Props = {
   documentId: number;
 } & RouteComponentProps;
 
-type QueryInputProps = {
+interface QueryInputProps {
   documentId: number;
-};
+}
 
-type QueryResponse = {
+interface QueryResponse {
   document: {
     id: number;
     content: string;
   };
-};
+}
 
 type QueryVariables = QueryInputProps;
 
-type MutationInputProps = {
+interface MutationInputProps {
   documentId: number;
   content: string;
-};
+}
 
-type MutationReponse = {
+interface MutationReponse {
   updateDocumentContent: {
     document: {
       id: number;
       content: string;
     };
   };
-};
+}
 
 type MutationVariables = MutationInputProps;
 
@@ -55,6 +55,11 @@ type ChildProps = ChildMutateProps<
   Props;
 
 const SAVE_INTERVAL_IN_MILLISECONDS = 3000;
+
+const fromGraphQl = (value: string): Value => Value.fromJSON(JSON.parse(value));
+const toGraphQl = (value: Value): string => JSON.stringify(value.toJSON());
+
+const TOAST_DISPLAY_LENGTH_IN_MILLISECONDS = 3000;
 
 class EditDocument extends Component<
   ChildProps,
@@ -75,7 +80,7 @@ class EditDocument extends Component<
       this.state.documentContent &&
       value.document !== get(this.state.documentContent, 'document')
     ) {
-      let self = this;
+      const self = this;
 
       this.debouncedMutation({
         variables: {
@@ -85,12 +90,9 @@ class EditDocument extends Component<
         update() {
           self.setState({ toastIsVisible: true });
 
-          setTimeout(() => {
-            return (
-              self.setState({ toastIsVisible: false }),
-              TOAST_DISPLAY_LENGTH_IN_MILLISECONDS
-            );
-          });
+          setTimeout((): void => {
+            self.setState({ toastIsVisible: false });
+          }, TOAST_DISPLAY_LENGTH_IN_MILLISECONDS);
         },
       });
     }
@@ -98,7 +100,7 @@ class EditDocument extends Component<
     this.setState({ documentContent: value });
   };
   render() {
-    let {
+    const {
       props: {
         data: { loading, error, document },
       },
@@ -111,7 +113,7 @@ class EditDocument extends Component<
     }
 
     if (!isUndefined(document)) {
-      let { content: queryContent } = document;
+      const { content: queryContent } = document;
 
       return (
         <div>
@@ -135,7 +137,7 @@ class EditDocument extends Component<
   }
 }
 
-let EditDocumentFragments = {
+const EditDocumentFragments = {
   document: gql`
     fragment EditDocumentDocument on Document {
       id
@@ -143,11 +145,6 @@ let EditDocumentFragments = {
     }
   `,
 };
-
-let fromGraphQl = (value: string): Value => Value.fromJSON(JSON.parse(value));
-let toGraphQl = (value: Value): string => JSON.stringify(value.toJSON());
-
-const TOAST_DISPLAY_LENGTH_IN_MILLISECONDS = 3000;
 
 const DOCUMENT_QUERY = gql`
   query DocumentQuery($documentId: ID!) {

@@ -5,9 +5,9 @@ import { Editor } from 'slate';
 export default function renderMark(
   props: RenderMarkProps,
   _editor: Editor,
-  next: () => any
+  next: () => void
 ): ReactNode | void {
-  let {
+  const {
     children,
     mark: { type },
     attributes,

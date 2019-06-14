@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-let Spinner: FC<{}> = () => <div />;
+const Spinner: FC<{}> = () => <div />;
 
 export default Spinner;
 

@@ -18,22 +18,36 @@ interface AllDocumentsDocument extends DocumentType {
   id: number;
 }
 
-type QueryResponse = {
+interface QueryResponse {
   viewer: { documents: AllDocumentsDocument[] };
-};
+}
 
-type MutationResponse = {
+interface MutationResponse {
   createDocument: {
     document: {
       id: number;
     };
   };
-};
+}
 type ChildProps = ChildDataProps<{}, QueryResponse, {}> &
   ChildMutateProps<{}, MutationResponse, {}> &
   RouteComponentProps;
 
-let AllDocuments: FC<ChildProps> = ({
+const createDocument: MutationOptions<MutationResponse, {}> = {
+  update: (_cache: DataProxy, { data }) => {
+    if (data) {
+      const {
+        createDocument: {
+          document: { id },
+        },
+      } = data;
+
+      navigate(`/documents/edit/${id}`);
+    }
+  },
+};
+
+const AllDocuments: FC<ChildProps> = ({
   data: { loading, error, viewer },
   mutate,
 }) => {
@@ -42,9 +56,9 @@ let AllDocuments: FC<ChildProps> = ({
   }
 
   if (viewer) {
-    let { documents } = viewer;
+    const { documents } = viewer;
 
-    let hasDocuments = documents.length > 0;
+    const hasDocuments = documents.length > 0;
 
     return (
       <div>
@@ -100,27 +114,13 @@ const CREATE_DOCUMENT_MUTATION = gql`
   }
 `;
 
-type CreateDocumentButtonProps = {
+interface CreateDocumentButtonProps {
   onClick: MouseEventHandler<HTMLButtonElement>;
-};
+}
 
-let CreateDocumentButton: FC<CreateDocumentButtonProps> = ({ onClick }) => (
+const CreateDocumentButton: FC<CreateDocumentButtonProps> = ({ onClick }) => (
   <button onClick={onClick}>+</button>
 );
-
-let createDocument: MutationOptions<MutationResponse, {}> = {
-  update: (_cache: DataProxy, { data }) => {
-    if (data) {
-      let {
-        createDocument: {
-          document: { id },
-        },
-      } = data;
-
-      navigate(`/documents/edit/${id}`);
-    }
-  },
-};
 
 export default compose(
   graphql<{}, Response, {}, ChildProps>(DOCUMENTS_QUERY),

@@ -9,9 +9,9 @@ import Checkbox from 'components/Checkbox';
 export default function renderNode(
   props: RenderNodeProps,
   _editor: Editor,
-  next: () => any
+  next: () => void
 ): ReactNode | void {
-  let {
+  const {
     attributes,
     children,
     node: { type, data },
@@ -58,8 +58,8 @@ export default function renderNode(
       return <code {...attributes}>{children}</code>;
 
     case 'link': {
-      let href = data.get('href');
-      let title = data.get('title');
+      const href = data.get('href');
+      const title = data.get('title');
 
       return (
         <a {...attributes} href={href} title={title}>
@@ -69,8 +69,8 @@ export default function renderNode(
     }
 
     case 'image': {
-      let src = data.get('src');
-      let alt = data.get('alt');
+      const src = data.get('src');
+      const alt = data.get('alt');
 
       return <img {...attributes} src={src} alt={alt} />;
     }
@@ -90,7 +90,7 @@ export default function renderNode(
       );
 
     case 'embed': {
-      let src = data.get('src');
+      const src = data.get('src');
 
       return (
         <div
