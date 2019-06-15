@@ -1,6 +1,14 @@
 import { resolve } from 'path';
 import { Plugin, Configuration, RuleSetRule } from 'webpack';
-import { entryPath, outputPath, contextPath, srcPath } from './paths';
+import {
+  entryPath,
+  outputPath,
+  contextPath,
+  srcPath,
+  templatePath,
+  templateOutputPath,
+  publicPath,
+} from './paths';
 
 import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
@@ -8,6 +16,7 @@ import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import TsConfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import ManifestPlugin from 'webpack-manifest-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -77,21 +86,15 @@ const rules: RuleSetRule[] = [
       },
     ],
   },
-  {
-    test: /\.html$/,
-    exclude: /(node_modules|bower_components)/,
-    use: {
-      loader: 'html-loader',
-    },
-  },
+  { test: /\.html$/, loader: 'html-loader', include: templatePath },
 ];
 
 const plugins: Plugin[] = [
   new FriendlyErrorsWebpackPlugin(),
   new HtmlWebpackPlugin({
     hash: isDev ? false : true,
-    template: './src/index.html',
-    filename: 'index.html',
+    template: templatePath,
+    filename: templateOutputPath,
     inject: true,
   }),
   new ForkTsCheckerWebpackPlugin({
@@ -101,6 +104,7 @@ const plugins: Plugin[] = [
   }),
   new CleanWebpackPlugin(),
   new ManifestPlugin({ writeToFileEmit: true }),
+  new CopyWebpackPlugin([{ from: './static', to: '../' }]),
 ];
 
 const baseConfig: Configuration = {
@@ -109,6 +113,7 @@ const baseConfig: Configuration = {
     path: outputPath,
     filename: '[name].[hash].js',
     chunkFilename: '[chunkhash].js',
+    publicPath,
   },
   context: contextPath,
   module: {

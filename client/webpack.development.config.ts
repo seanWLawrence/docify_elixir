@@ -17,9 +17,6 @@ const devConfig: WebpackConfiguration & DevServerConfiguration = {
     historyApiFallback: true,
     writeToDisk: true,
     compress: true,
-    proxy: {
-      '/': 'http://localhost:4000',
-    },
   },
   module: {
     rules: [
