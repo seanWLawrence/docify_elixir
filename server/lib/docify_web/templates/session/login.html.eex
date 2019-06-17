@@ -1,8 +1,7 @@
-<h1>Sign in</h1>
+<div class="page">
+  <h1>Sign in</h1>
 
-<button>Login with Google</button>
-
-<%= form_for @conn, @callback_url, fn f -> %>
+  <%= form_for @conn, @callback_url, fn f -> %>
   <div class="form-group">
     <%= text_input f, :email, placeholder: "Email" %>
   </div>
@@ -14,4 +13,5 @@
   <div class="form-group">
     <%= submit "Login" %>
   </div>
-<% end %>
+  <% end %>
+</div>

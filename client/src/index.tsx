@@ -1,4 +1,5 @@
 import 'phoenix_html';
+import './scss/app.scss';
 
 import React, { lazy, Suspense } from 'react';
 import { render } from 'react-dom';

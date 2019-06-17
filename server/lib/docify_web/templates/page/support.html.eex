@@ -1,10 +1,11 @@
-<main id="about">
-  <div class="About__Container">
-    <h1>About</h1>
-    <p>
-      Lorem ipsum dolor amet hell of glossier heirloom, tote bag coloring book migas authentic fingerstache intelligentsia selvage irony woke kogi. 
-      Readymade four loko prism lumbersexual tumblr distillery. Readymade trust fund bushwick echo park twee wolf aesthetic vice swag iPhone pickled. 
-      Bespoke kitsch DIY asymmetrical affogato cardigan vape sartorial aesthetic direct trade sustainable scenester 90's cold-pressed lyft.
-    </p>
-  </div>
+<main id="support" class="page">
+  <h1>Support</h1>
+  <p>
+    Lorem ipsum dolor amet hell of glossier heirloom, tote bag coloring book
+    migas authentic fingerstache intelligentsia selvage irony woke kogi.
+    Readymade four loko prism lumbersexual tumblr distillery. Readymade trust
+    fund bushwick echo park twee wolf aesthetic vice swag iPhone pickled.
+    Bespoke kitsch DIY asymmetrical affogato cardigan vape sartorial aesthetic
+    direct trade sustainable scenester 90's cold-pressed lyft.
+  </p>
 </main>

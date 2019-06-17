@@ -12,6 +12,7 @@ const DemoDocument: FC<RouteComponentProps> = () => {
 
   return (
     <div>
+      <h1>I love you, man!</h1>
       <Editor
         value={content}
         onChange={({ value }: { value: Value }) => setContent(value)}

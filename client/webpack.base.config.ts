@@ -5,6 +5,7 @@ import {
   outputPath,
   contextPath,
   srcPath,
+  // cssPath,
   templatePath,
   templateOutputPath,
   publicPath,
@@ -17,6 +18,7 @@ import TsConfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import ManifestPlugin from 'webpack-manifest-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -87,6 +89,19 @@ const rules: RuleSetRule[] = [
     ],
   },
   { test: /\.html$/, loader: 'html-loader', include: templatePath },
+  {
+    test: /\.scss$/,
+    use: [
+      {
+        loader: MiniCssExtractPlugin.loader,
+        options: {
+          hmr: isDev,
+        },
+      },
+      'css-loader',
+      'sass-loader',
+    ],
+  },
 ];
 
 const plugins: Plugin[] = [
@@ -103,8 +118,9 @@ const plugins: Plugin[] = [
     watch: isDev ? srcPath : void 0,
   }),
   new CleanWebpackPlugin(),
-  new ManifestPlugin({ writeToFileEmit: true }),
+  new MiniCssExtractPlugin({ filename: '../css/app.css' }),
   new CopyWebpackPlugin([{ from: './static', to: '../' }]),
+  new ManifestPlugin({ writeToFileEmit: true }),
 ];
 
 const baseConfig: Configuration = {

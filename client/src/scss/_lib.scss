@@ -1,0 +1,46 @@
+$color-main: cornflowerblue;
+$color-medium: #333;
+$color-faint: #999;
+$color-white: #f9f9f9;
+$color-black: #111;
+
+$color-primary-5: cornflowerblue;
+$color-primary-4: lighten($color-primary-5, 2.5%);
+$color-primary-3: lighten($color-primary-4, 5%);
+$color-primary-2: lighten($color-primary-3, 7.5%);
+$color-primary-1: lighten($color-primary-2, 10%);
+
+$color-black-5: #111;
+$color-black-4: lighten($color-black-5, 2.5%);
+$color-black-3: lighten($color-black-4, 5%);
+$color-black-2: lighten($color-black-3, 7.5%);
+$color-black-1: lighten($color-black-2, 10%);
+
+$color-gray-5: gray;
+$color-gray-4: lighten($color-gray-5, 2.5%);
+$color-gray-3: lighten($color-gray-4, 5%);
+$color-gray-2: lighten($color-gray-3, 7.5%);
+$color-gray-1: lighten($color-gray-2, 10%);
+
+$color-white-5: #eee;
+$color-white-4: lighten($color-white-5, 2.5%);
+$color-white-3: lighten($color-white-4, 5%);
+$color-white-2: lighten($color-white-3, 7.5%);
+$color-white-1: lighten($color-white-2, 10%);
+
+$font-weight-bold: 700;
+
+$font-size-1: 6rem;
+$font-size-2: 5rem;
+$font-size-3: 4rem;
+$font-size-4: 3rem;
+$font-size-5: 2rem;
+$font-size-6: 1rem;
+
+@mixin box-shadow {
+  box-shadow: 0 4px 9px $color-gray-1;
+}
+
+@function scale($scale) {
+  @return $scale * 1em;
+}

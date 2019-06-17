@@ -1,25 +1,22 @@
-<main id="home">
-  <div class="Home__BannerContainer">
-    <div>
-      <h1>
-        Create
-        <br />
+<main id="home" class="page">
+  <h1>
+    Create
+    <br />
 
-        Beautiful
-        <br />
+    Beautiful
+    <br />
 
-        Documents
-      </h1>
+    Documents
+  </h1>
 
-      <p>Docify helps you focus on doing your best work with an easy-to-use, extremely flexible text editor and file management solution.</p>
-    </div>
+  <p>
+    Docify helps you focus on doing your best work with an easy-to-use,
+    extremely flexible text editor and file management solution.
+  </p>
 
-    <div class="Home__ButtonContainer">
-      <a href="/documents/demo">
-        <button class="Button--Secondary Home__Button">
-          Demo
-        </button>
-      </a>
-    </div>
-  </div>
+  <a href="/demo" title="Demo">
+    <button>
+      Demo
+    </button>
+  </a>
 </main>

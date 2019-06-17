@@ -1,0 +1,121 @@
+@import './lib';
+
+html {
+  font-family: -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Fira Sans",
+    "Droid Sans",
+    "Helvetica Neue",
+    Arial,
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  color: $color-black-5;
+  font-size: 20px;
+}
+
+body {
+  background-color: $color-white-5;
+}
+
+li {
+  list-style-type: none;
+  margin-right: 1em;
+}
+
+a {
+  color: $color-main;
+  text-decoration: none;
+}
+
+nav {
+  display: flex;
+  justify-content: flex-end;
+  margin: scale(1) scale(2);
+
+  a {
+    @extend a;
+    color: $color-medium;
+    padding: scale(.5);
+
+    &:hover {
+      color: $color-primary-5;
+    }
+  }
+}
+
+h1 {
+  font-size: $font-size-1;
+  line-height: 1;
+  margin: 0;
+}
+
+h2 {
+  font-size: $font-size-2;
+  line-height: 1;
+  margin: 0;
+}
+
+h3 {
+  font-size: $font-size-3;
+  line-height: 1;
+  margin: 0;
+}
+
+h4 {
+  font-size: $font-size-4;
+  line-height: 1;
+  margin: 0;
+}
+
+h5 {
+  font-size: $font-size-5;
+  line-height: 1;
+  margin: 0;
+}
+
+h6 {
+  font-size: $font-size-6;
+  line-height: 1;
+  margin: 0;
+}
+
+p,
+span,
+li,
+ol,
+ul {
+  font-size: $font-size-6;
+  color: $color-black-1;
+  line-height: 1.75;
+  margin: .5em 0;
+}
+
+button {
+  background-color: $color-main;
+  border: $color-main;
+  padding: 1em 1.5em;
+  color: $color-white;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: .25em;
+
+  &:hover {
+    @include box-shadow;
+  }
+}
+
+input {
+  padding: .5em;
+  border: 0;
+  border-bottom: .25em solid $color-primary-5;
+  font-size: 1.5rem;
+  margin-bottom: 1em;
+  color: $color-black-1;
+}

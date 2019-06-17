@@ -1,0 +1,29 @@
+@import './lib';
+
+.page {
+  background-color: $color-white-1;
+  padding: scale(5);
+  margin: 0 scale(2.5);
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-bottom: scale(.25);
+  }
+
+  h2 {
+    margin-top: .5em;
+  }
+
+  p,
+  li {
+    max-width: 750px;
+  }
+}

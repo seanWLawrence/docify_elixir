@@ -10,7 +10,15 @@ config :docify, DocifyWeb.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
-  check_origin: false
+  watchers: [
+    node: [
+      "node_modules/.bin/webpack-dev-server",
+      "--config-name",
+      "development",
+      "--watch-stdin",
+      cd: Path.expand("../../client", __DIR__)
+    ]
+  ]
 
 # ## SSL Support
 #
@@ -40,8 +48,8 @@ config :docify, DocifyWeb.Endpoint,
 config :docify, DocifyWeb.Endpoint,
   live_reload: [
     patterns: [
-      ~r{src/.*(ts|tsx|js|css|svg)$},
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
+      ~r{priv/static/js/.*(js|css|png|jpeg|jpg|gif|svg)$},
       ~r{priv/gettext/.*(po)$},
       ~r{lib/docify_web/views/.*(ex)$},
       ~r{lib/docify_web/templates/.*(eex)$}
