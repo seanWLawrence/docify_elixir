@@ -15,7 +15,7 @@ defmodule DocifyWeb.Endpoint do
     from: :docify,
     gzip: false,
     only:
-      ~w(css js images robots.txt manifest.json index.html service-worker.js asset-manifest.json)
+      ~w(client images robots.txt manifest.json index.html service-worker.js asset-manifest.json)
   )
 
   # Code reloading can be explicitly enabled under the

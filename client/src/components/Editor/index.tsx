@@ -18,11 +18,7 @@ export default class Editor extends Component<EditorProperties, {}> {
     this.editor = instance;
   };
 
-  componentDidMount() {
-    if (this.editor !== null) {
-      this.editor.moveFocusToEndOfDocument();
-    }
-  }
+  componentDidMount() {}
 
   render() {
     const {
@@ -31,11 +27,12 @@ export default class Editor extends Component<EditorProperties, {}> {
     } = this;
 
     return (
+      // @ts-ignore
       <Slate
         autoFocus
         autoCorrect
         spellCheck
-        renderNode={renderNode}
+        renderBlock={renderNode}
         renderMark={renderMark}
         onKeyDown={onKeyDown}
         onChange={onChange}

@@ -16,6 +16,8 @@ export default function renderNode(
     children,
     node: { type, data },
   } = props;
+  // eslint-disable-next-line
+  console.log('RENDER NODE', type, props);
 
   switch (type) {
     case 'paragraph':

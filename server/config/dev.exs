@@ -49,7 +49,7 @@ config :docify, DocifyWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
-      ~r{priv/static/js/.*(js|css|png|jpeg|jpg|gif|svg)$},
+      ~r{priv/static/client/.*(js|css|png|jpeg|jpg|gif|svg)$},
       ~r{priv/gettext/.*(po)$},
       ~r{lib/docify_web/views/.*(ex)$},
       ~r{lib/docify_web/templates/.*(eex)$}

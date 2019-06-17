@@ -2,8 +2,8 @@ defmodule Docify.Scalars.DateTime do
   use Absinthe.Schema.Notation
 
   scalar :datetime, name: "DateTime" do
-    serialize &DateTime.to_naive/1
-    parse &parse_datetime/1
+    serialize(&DateTime.to_naive/1)
+    parse(&parse_datetime/1)
   end
 
   defp parse_datetime(%Absinthe.Blueprint.Input.String{value: value}) do
@@ -17,7 +17,7 @@ defmodule Docify.Scalars.DateTime do
   defp parse_datetime(%Absinthe.Blueprint.Input.Null{}) do
     {:ok, nil}
   end
-  
+
   defp parse_datetime(_) do
     :error
   end

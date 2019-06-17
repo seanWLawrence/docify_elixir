@@ -118,7 +118,7 @@ const plugins: Plugin[] = [
     watch: isDev ? srcPath : void 0,
   }),
   new CleanWebpackPlugin(),
-  new MiniCssExtractPlugin({ filename: '../css/app.css' }),
+  new MiniCssExtractPlugin({ filename: 'app.css' }),
   new CopyWebpackPlugin([{ from: './static', to: '../' }]),
   new ManifestPlugin({ writeToFileEmit: true }),
 ];
@@ -127,8 +127,8 @@ const baseConfig: Configuration = {
   entry: entryPath,
   output: {
     path: outputPath,
-    filename: '[name].[hash].js',
-    chunkFilename: '[chunkhash].js',
+    filename: '[name][hash].js',
+    chunkFilename: '[name][chunkhash].js',
     publicPath,
   },
   context: contextPath,

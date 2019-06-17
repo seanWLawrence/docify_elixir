@@ -13,6 +13,9 @@ export default function renderMark(
     attributes,
   } = props;
 
+  // eslint-disable-next-line
+  console.log('RENDER MARK', type, props);
+
   switch (type) {
     case 'bold':
       return <strong {...attributes}>{children}</strong>;
